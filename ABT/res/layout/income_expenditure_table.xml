@@ -1,0 +1,78 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/gray_theme">
+   <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/layout_root"
+            android:layout_weight="50" >
+      
+       <include layout="@layout/org_info"/>
+       
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ScrollIncome"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+         <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/layout_root"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="10dp" >
+             <HorizontalScrollView 
+              android:layout_height="fill_parent"
+          android:layout_width="fill_parent"
+            android:fillViewport="true">
+              <ScrollView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:fillViewport="true"
+           android:scrollbarFadeDuration="0"
+           android:scrollbarAlwaysDrawVerticalTrack="true" 
+           android:scrollbarAlwaysDrawHorizontalTrack="true">
+           
+            <LinearLayout
+       	android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="vertical">
+           
+           <LinearLayout
+               android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+           
+               <TableLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:stretchColumns=",1,2"
+           android:id="@+id/maintable1"
+           android:background="#ffffff"
+           android:layout_weight="1" />
+              
+           <!-- just add space line -->
+   	<Space
+   	   android:layout_width="2dip"
+       android:layout_height="2dip"/>
+   	
+               <TableLayout
+           android:id="@+id/maintable2"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:stretchColumns=",1,2"
+           android:background="#ffffff"
+           android:layout_weight="1" />
+               
+                </LinearLayout>
+                
+                </LinearLayout>
+            </ScrollView>
+            </HorizontalScrollView>
+         </LinearLayout>  
+        </ScrollView>
+        
+    </LinearLayout>
+ 
+ </RelativeLayout>

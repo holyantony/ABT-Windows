@@ -1,0 +1,123 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent" 
+ 		android:layout_height="fill_parent"
+ 		android:orientation="vertical"
+ 		android:weightSum="100">
+    	<ScrollView  
+		   android:layout_width="fill_parent" 
+			android:layout_height="fill_parent"
+			android:layout_weight="90">
+   
+<LinearLayout
+    android:id="@+id/layout_signup"
+    android:layout_width="fill_parent"
+    android:layout_height="459dp"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:weightSum="100" >
+            	
+    	<TextView
+		    android:id="@+id/tvalertHead1"
+		    android:layout_width="match_parent"
+		    android:layout_height="40dp"
+		    android:gravity="center_vertical"
+		    android:paddingLeft="20dp"
+		    style="@style/ShodowFont"
+		    android:layout_weight="20"
+		    android:background="@color/blue_theme"/>
+    
+    	<ScrollView 
+    		android:layout_width="match_parent"
+    		android:layout_height="match_parent"
+    		android:background="@color/gray_theme"
+    		android:padding="20dp"
+    		android:layout_gravity="center_horizontal"
+    		android:layout_weight="80" >
+               <TableLayout
+                   android:layout_width="fill_parent"
+                   android:layout_height="450dp" >
+		
+					<TextView
+				    android:id="@+id/tvWarning"
+				    android:layout_width="match_parent"
+				    android:layout_height="wrap_content"
+				    style="@style/CodeFont"
+				    android:textColor="#088A08"
+				    android:gravity="center_horizontal"
+				    android:visibility="gone" />
+			<TableRow
+			     android:id="@+id/trQuestion">
+
+				<TextView
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:paddingRight="100dp"
+				    android:text="Select organisation:"
+				    style="@style/CodeFont"
+				    android:layout_weight="1"
+				    android:gravity="left" />
+
+				<Spinner
+				    android:id="@+id/sOrganisation"
+				    android:layout_width="300dp"
+				    android:layout_height="wrap_content"
+				    android:layout_weight="1" />
+ 
+			</TableRow>
+			<TableRow
+			     android:id="@+id/trAnswer">
+			    
+				<TextView
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:paddingRight="100dp"
+				    android:text="Select financial year:"
+				    style="@style/CodeFont"
+				    android:layout_weight="1"
+				    android:gravity="left" />
+
+		        <Spinner
+				    android:id="@+id/sYear"
+				    android:layout_width="300dp"
+				    android:layout_height="wrap_content"
+				    android:layout_weight="1" />
+			</TableRow>
+      	</TableLayout> 
+      </ScrollView>
+     
+</LinearLayout>
+
+
+</ScrollView>
+ 		<LinearLayout
+			     android:layout_width="fill_parent"
+			     android:layout_height="wrap_content"
+			     android:layout_gravity="center_vertical"
+			     android:background="#FFFFFF"
+			     android:gravity="center"
+			     android:orientation="horizontal" 
+			     android:layout_alignParentBottom="true"
+			     android:layout_weight="7" >
+
+                 <Button
+                     android:id="@+id/btnImport"
+                     android:layout_width="wrap_content"
+                     android:layout_height="match_parent"
+                     android:text="Import"
+                     android:layout_weight="1"
+                     android:gravity="center"
+                     android:layout_alignParentBottom="true"
+                     android:layout_gravity="center_vertical"
+                     style="@style/DefaultButton"  />
+                 <Button
+                    android:id="@+id/btnExit"  
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Exit"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center_vertical"
+                    style="@style/DefaultButton" />
+            </LinearLayout>
+ </LinearLayout>

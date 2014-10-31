@@ -1,0 +1,171 @@
+<resources>
+
+    <string name="app_name">Aakash Business Tool</string>
+    <string name="hello_world">Welcome to Aakash Business Tool!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">ABT</string>
+    <string name="createOrgButton"> Create  new  organisation </string>
+    <string name="selectOrgButton">Select existing organisation</string>
+    <string name="orgName">Enter organisation name</string>
+    <string name="orgType">Organisation type</string>
+    <string name="preferences">Select Prferences </string>
+    <string name="projectwise_accounting">Do you want to do projectwise accouting ?</string> 
+    <string name="suggested_accountcode">   Do you want to give your own accountcode, if yes, then suggested code will be available </string> 
+    <string name="muanually_rollover">  rollover manually?? default: automatic </string>
+    <string name="orgType_prompt">Select organisation type</string>
+    <string-array name="orgType_arrays">
+       	<item>NGO</item>
+         <item>Profit Making</item>
+    </string-array>
+   
+    <string name="country">Select country</string>
+    <string-array name="country_prompt"><item>India</item></string-array>
+    
+    <string name="state">Select state</string>
+    <string name="city">Select city</string>
+
+    <style name="CustomTheme" parent="android:Theme">
+        <item name="android:windowTitleSize">30dip</item>
+    </style>
+    
+    <style name="TabText">
+    <item name="android:textColor">@color/tab_text_change</item>
+</style>
+    
+     <string name="Search_prompt">Select account type</string>
+    <string-array name="SearchBy_arrays">
+        <item>Dr</item>
+        <item>Cr</item>
+    </string-array>
+    
+    <string name="accountName_prompt">Select account name</string>
+    <string-array name="accountName_arrays">
+    </string-array>
+    
+   <string name="BalanceSheet_prompt">Select balancesheet type</string>
+    
+    <string name="getaccNamesinLedger">Select account name</string>
+    <string-array name="getaccNamesinLedger">
+        <item>Conventional Balance Sheet</item>
+        <item>Sources and Application of Funds</item>
+    </string-array>
+    
+    <string name="TrialBalance_prompt">Select trial balance type</string>
+    <string-array name="TrialBalance_arrays">
+        <item>Net Trial Balance</item>
+        <item>Gross Trial Balance</item>
+        <item>Extended Trial Balance</item>
+    </string-array>
+    
+    <string name="grpName_prompt">Select group name</string> 
+    <string name="voucherType_prompt">Select voucher type</string>       
+    <string name="subgrpName_prompt">Select subgroup name</string>
+    <string name="orgName_prompt">Select organisation name</string>
+    <string name="financialyear_prompt">Select financial year</string>
+    <string name="projectName_prompt">Select project name</string>
+    
+    <string name="searchVoucherBy">Search voucher by</string>
+   <string-array name="searchVoucherBy">
+        <item>Voucher reference number</item>
+        <item>Date</item>
+        <item>Narration</item>
+        <item>Voucher number</item>
+        <item>Account name</item>
+        <item>Voucher type</item>
+        
+        
+        
+    </string-array>
+    
+    
+    <string name="searchAccountBy_prompt">Search account by</string>
+    <string-array name="searchAccountBy_arrays">
+        <item>Search account by name</item>
+        <item>Search account by code</item>
+    </string-array>
+    
+    <string name="help_para1">
+        \n<b>1.Aakash Business Tool welcome page:</b>
+        \n	Here the user can create a new organization or select an existing one.
+   </string> 
+   
+    <string name="help_para2">
+        \n<b>2.Create new organization:</b>
+        \n	When the user clicks on <b>Create new organization</b> button on the main page, 
+        \n it will call the <b>Create new organization</b> page.
+   </string>
+   
+    <string name="help_para3">
+        \n<b>3.Select organization:</b>
+        \n	When the user clicks on <b>Select existing organization</b> button, 
+        \n it will call the <b>select organization</b> page.    
+   </string>
+   
+    <string name="help_para4">
+        \n<b>4.Fill organization details:</b>
+        \n	After the user fills organization details, he can save the information by clicking on the <b>Save</b> button. 
+           if the user does not want to fill the information, he can simply click the <b>Skip</b> button.
+   </string>
+   
+    <string name="help_para5">
+        \n<b>5.Preferences:</b>
+        \n	User can add new projects and check the <b>Account code</b> using the <b>check-box</b>,if a manual account code has to be provided. 
+   </string>
+   
+    <string name="help_para6">
+        \n<b>6.Create account:</b>
+        \n	User can create an account under respective <b>Group name</b> and <b>Subgroup name</b> with an opening balance. 
+	     This will automatically update the total debit opening balance, total credit opening balance and difference between them.
+   </string>
+   
+    <string name="help_para7">
+        \n<b>7.Master menu:</b>
+        \n	This is the master menu of Aakash Business Tool. Here, user can create/search account, enter/search transaction, 
+        view reports(ledger and trial balance) and add more projects.
+    </string>
+   
+    <string name="help_para8">
+        \n<b>8.Enter transaction:</b>
+        \n	This page allows the user to enter and search transactions(see below figure [a] and [c])) . 
+	  <b>Home</b> button will take the user to the master menu page(see figure [b]). 
+	  <b>Search</b> botton will help to locate a transaction by the voucher reference number, date and narration(see figure [d]).
+    </string>
+   
+    <string name="help_para9">
+        \n<b>9.Reports Menu:</b>
+        \n	This page provides a list of all report types. After the user clicks on <b>Report</b> type,
+	  he will get an alert dialog, which will allow him to enter necessary details in order to view the report. 
+	  For Example: <b>Ledger</b>(see figure [e]) , <b>Trial Balance</b>(see figure [f]) and so on.
+     </string>
+
+    <string name="about_para">
+        &lt;br /&gt;<b>Aakash Business Tool</b> is a Free Accounting Software that provides 
+        students and accountants to carry on their work while on the go.
+        Designed and developed at IIT Bombay. 
+        &lt;br /&gt;Version: <b>1.0</b>
+        &lt;br /&gt;Repository: <![CDATA[<a href=\'https://github.com/androportal/ABT\'>https://github.com/androportal/ABT</a>]]> 
+        &lt;br /&gt;License:
+        GNU GPL, version-3, 29 June 2007
+        &lt;br /&gt;<![CDATA[<a href=\'http://www.gnu.org/licenses/gpl-3.0.txt\'>http://www.gnu.org/licenses/gpl-3.0.txt</a>]]> 
+        &lt;br /&gt;Copyright © 2013, National Mission on Education through ICT, Government of India. 
+   </string>
+   <string name="Rs">\u20B9</string>  
+   <string name="closing_balance">Closing balance(\u20B9)</string>  
+   <string name="amount">Amount(\u20B9)\t\t</string>  
+   <string name="forgot_password"><u>Forgot password?</u></string>  
+   
+   <string name="questions">Select question</string>
+    <string-array name="ques_prompt">
+        <item>what is your favourite authors name?</item>
+       	<item>What is the country of your ultimate dream vacation?</item>
+        <item>What was your favorite sport in high school?</item>
+        <item>What is the name of your hometown newspaper?</item>
+       	<item>What is the largest amount of money you have lent that was never paid back?</item>
+        <item>Who has been the kindest to you in your life?</item>
+        <item>When were you born?</item>
+        <item>Where is your work place?</item>
+        <item>What is your worst boss name?</item>
+    </string-array>
+    </resources>
+	
+    

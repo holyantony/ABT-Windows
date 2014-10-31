@@ -1,0 +1,101 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/gray_theme">
+
+   <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:id="@+id/layout_root"
+            android:layout_weight="50">
+            
+       <include layout="@layout/org_info"/>
+      
+        <LinearLayout
+            android:id="@+id/layout_root"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/blue_theme"
+            android:layout_margin="3dp">
+			        
+					<Button
+					    android:id="@+id/add_user"
+					    android:layout_width="wrap_content"
+					    android:layout_height="match_parent"
+					    android:text="Add user"
+					    android:layout_gravity="center_vertical"
+					    android:gravity="center"
+					    style="@style/DefaultButton"
+			         	android:layout_weight="1"
+			         	/>
+					
+					<TableRow
+					    android:id="@+id/trUserRole"
+					    android:layout_width="wrap_content"
+					    android:layout_height="wrap_content"
+					    android:layout_weight="1"
+					    android:gravity="center_horizontal"
+					    android:layout_gravity="center">
+		        <TextView
+				    android:id="@+id/tRole"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:paddingRight="100dp"
+				    android:text="Choose user role"
+				    android:layout_gravity="center_vertical"
+				    android:gravity="left"
+				    style="@style/CodeFont" />
+			 	<RadioGroup
+			        android:id="@+id/radioRole"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content" 
+			        android:orientation="horizontal">
+		 
+				 <RadioButton
+		                android:id="@+id/rbManager"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		        		android:paddingRight="20dp"
+		                android:text="manager"
+		               	style="@style/CodeFont"
+		                android:checked="true" />  
+		
+		          <RadioButton
+		              android:id="@+id/rbOperator"
+		              android:layout_width="wrap_content"
+		              android:layout_height="wrap_content"
+		              android:paddingRight="20dp"
+		              style="@style/CodeFont"
+		              android:text="operator" />
+		        
+			  </RadioGroup>
+ 	  		</TableRow>
+			
+        </LinearLayout>
+  
+            <ListView
+	android:id="@+id/role_list"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:padding="10dp">
+	</ListView>
+	
+            
+           </LinearLayout>
+ 	<!-- floating button at top|left
+<Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:text="Button" />
+         -->
+      
+
+</RelativeLayout>
+  
+  

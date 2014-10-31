@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:layout_width="match_parent" 
+ android:layout_height="match_parent"
+ android:orientation="vertical"
+ android:background="@android:color/transparent">
+<ScrollView 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<LinearLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+    android:paddingLeft="10dp"
+ 	android:paddingRight="10dp">
+
+    <TextView
+        android:id="@+id/tvOrgName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter organisation name"
+        style="@style/CodeFont" />
+
+    <EditText
+        android:id="@+id/etOrgName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textCapSentences"
+        android:maxLength="50"
+        style="@style/EditTextAppTheme"
+        android:textColor="#FFFFFF">
+        <requestFocus android:layout_width="wrap_content" />
+
+    </EditText>
+
+    <TextView
+        android:id="@+id/tvOrgType"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Select organisation type"
+        style="@style/CodeFont" />
+
+    <Spinner
+        android:id="@+id/sOrgType"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/orgType_arrays"
+        android:prompt="@string/orgType_prompt"
+        style="@style/SpinnerAppTheme.DropDown"
+        android:spinnerMode="dialog"/>
+    
+    <TextView
+        android:id="@+id/tvFnclYear"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_weight="30"
+        android:gravity="center"
+        android:text="Financial year"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp" />
+    
+      
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:weightSum="100" >
+
+        <Button
+            android:id="@+id/btnChangeFromDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="40"
+            android:text="Set from date"
+            style="@style/DefaultButton" />
+		<View
+		android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="20" >
+    	</View>
+        <Button
+            android:id="@+id/btnChangeToDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="40"
+            style="@style/DefaultButton"
+            android:text=" Set to date " />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100" 
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp">
+
+        <TextView
+            android:id="@+id/tvFromDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="40"
+            android:gravity="center"
+            style="@style/CodeFont" />
+		
+        <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="20" >
+    	</View>
+        
+        <TextView
+            android:id="@+id/tvToDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="40"
+            android:gravity="center"
+            style="@style/CodeFont" />
+    </LinearLayout>
+
+    
+</LinearLayout>
+</ScrollView>
+
+<LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="20"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/btnCreate"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="Next"
+            style="@style/DefaultButton"/>
+    </LinearLayout>
+</LinearLayout>

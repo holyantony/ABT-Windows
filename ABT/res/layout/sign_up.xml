@@ -1,0 +1,292 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+         android:layout_width="fill_parent" 
+ android:layout_height="fill_parent"
+ android:orientation="vertical"
+ android:weightSum="100">
+<ScrollView  
+ android:layout_width="fill_parent" 
+ android:layout_height="fill_parent"
+ android:layout_weight="90">
+   
+<LinearLayout
+    
+    android:id="@+id/layout_signup"
+    android:layout_width="fill_parent"
+    android:layout_height="459dp"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:weightSum="100">
+            	
+    	<TextView
+		    android:id="@+id/tvalertHead1"
+		    android:layout_width="match_parent"
+		    android:layout_height="50dp"
+		    android:gravity="center_vertical"
+		    android:paddingLeft="20dp"
+		    style="@style/ShodowFont"
+		    android:background="@color/blue_theme"
+		    android:layout_weight="20"/>
+    
+    	<ScrollView 
+    		android:layout_width="match_parent"
+    		android:layout_height="match_parent"
+    		android:background="@color/gray_theme"
+    		android:paddingLeft="20dp"
+    		android:paddingRight="20dp"
+    		android:paddingTop="5dp"
+    		android:layout_gravity="center_horizontal"
+    		android:layout_weight="80" >
+               <TableLayout
+                   android:layout_width="fill_parent"
+                   android:layout_height="450dp" >
+		
+                   <TextView
+				    android:id="@+id/tvWarning"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:textAppearance="?android:attr/textAppearanceMedium"
+				    android:textColor="#F90000"
+				    android:visibility="gone"
+				    android:gravity="center_horizontal"/>
+                   
+					<TextView
+				    android:id="@+id/tvSignUp"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:textAppearance="?android:attr/textAppearanceMedium"
+				    android:textColor="#088A08"
+				    android:visibility="gone"
+				    android:gravity="center_horizontal" /> 
+					
+			  <TableRow
+			      android:id="@+id/trUserRole"
+			      android:visibility="gone">
+		        <TextView
+				    android:id="@+id/tRole"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:paddingRight="100dp"
+				    android:text="Choose user role:"
+				    style="@style/CodeFont"
+				    android:layout_weight="1"
+				    android:gravity="left" />
+			 	<RadioGroup
+			        android:id="@+id/radioRole"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content" 
+			        android:orientation="horizontal"
+			        android:layout_weight="1">
+		 
+				 <RadioButton
+		                android:id="@+id/rbManager"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		        		android:paddingRight="20dp"
+		                android:text="manager"
+		                android:checked="true"
+		                style="@style/RadioButtonAppTheme" />  
+		
+		          <RadioButton
+		              android:id="@+id/rbOperator"
+		              android:layout_width="wrap_content"
+		              android:layout_height="wrap_content"
+		              android:paddingRight="20dp"
+		              android:text="operator"
+		              style="@style/RadioButtonAppTheme" />
+		        
+			  </RadioGroup>
+ 	  		</TableRow>
+			
+			<TableRow android:id="@+id/row_username">
+				<TextView
+				    android:id="@+id/tUserName"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:paddingRight="100dp"
+				    android:text="Enter username"
+				    style="@style/CodeFont"
+				    android:layout_weight="1"
+				    android:gravity="left" />
+
+		         <EditText
+		            android:id="@+id/eUserName"
+		            android:layout_width="300dp"
+		            android:layout_height="wrap_content"
+		            android:ems="10"
+		            android:hint="Enter username"
+		            android:inputType="textPersonName"
+		            android:layout_weight="1"
+		            style="@style/EditTextAppTheme" />
+			</TableRow>
+			<TableRow android:id="@+id/row_password">
+				<TextView
+				    android:id="@+id/tPassword"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:paddingRight="100dp"
+				    android:text="Enter password"
+				    style="@style/CodeFont"
+				    android:layout_weight="1"
+				    android:gravity="left" />
+
+		        <EditText
+		            android:id="@+id/ePassword"
+		            android:layout_width="300dp"
+		            android:layout_height="wrap_content"
+		            android:ems="10"
+		            android:hint="Enter password"
+		            android:inputType="textPassword"
+		            android:layout_weight="1"
+		            style="@style/EditTextAppTheme" />
+			</TableRow>
+			<TableRow android:id="@+id/row_confirmPassword">
+
+				<TextView
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:paddingRight="100dp"
+				    android:text="Confirm password"
+				    style="@style/CodeFont"
+				    android:layout_weight="1"
+				    android:gravity="left" />
+
+		        <EditText
+		            android:id="@+id/eConfPassword"
+		            android:layout_width="300dp"
+		            android:layout_height="wrap_content"
+		            android:ems="10"
+		            android:hint="Re-enter password"
+		            android:inputType="textPassword"
+		            android:layout_weight="1"
+		            style="@style/EditTextAppTheme" />
+			</TableRow>
+			
+			<TableRow
+			     android:id="@+id/trQuestion">
+
+				<TextView
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:paddingRight="100dp"
+				    android:text="Select security question"
+				    style="@style/CodeFont"
+				    android:layout_weight="1"
+				    android:gravity="left" />
+
+				<Spinner
+				    android:id="@+id/sQuestions"
+				    android:layout_width="300dp"
+				    android:layout_height="wrap_content"
+				    android:layout_weight="1"
+				    android:entries="@array/ques_prompt"
+                	android:prompt="@string/questions"
+                	style="@style/SpinnerAppTheme" />
+ 
+			</TableRow>
+			<TableRow
+			     android:id="@+id/trAnswer">
+			    
+				<TextView
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:paddingRight="100dp"
+				    android:text="Enter answer"
+				    style="@style/CodeFont"
+				    android:layout_weight="1"
+				    android:gravity="left" />
+
+		        <EditText
+		            android:id="@+id/eAnswer"
+		            android:layout_width="300dp"
+		            android:layout_height="wrap_content"
+		            android:ems="10"
+		            android:hint="Enter answer"
+		            android:inputType="textEmailAddress"
+		            android:layout_weight="1"
+		            style="@style/EditTextAppTheme"/>
+			</TableRow>
+          
+		    <TableRow android:id="@+id/rowGender">
+		        <TextView
+				    android:id="@+id/tGender"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:paddingRight="100dp"
+				    android:text="Select gender:"
+				    style="@style/CodeFont"
+				    android:layout_weight="1"
+				    android:gravity="left" />
+		        
+			 	<RadioGroup
+			        android:id="@+id/radioGender"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content" 
+			        android:orientation="horizontal"
+			        android:layout_weight="1">
+		 
+				 <RadioButton
+		                android:id="@+id/rbMale"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		        		android:paddingRight="20dp"
+		                android:text="Male"
+		                android:checked="true"
+		                style="@style/RadioButtonAppTheme" />  
+		
+		          <RadioButton
+		              android:id="@+id/rbFemale"
+		              android:layout_width="wrap_content"
+		              android:layout_height="wrap_content"
+		              android:paddingRight="20dp"
+		              style="@style/RadioButtonAppTheme"
+		              android:text="Female" 
+		              />
+		          
+		          <RadioButton
+		              android:id="@+id/rbOther"
+		              android:layout_width="wrap_content"
+		              android:layout_height="wrap_content"
+		              android:paddingRight="20dp"
+		              style="@style/RadioButtonAppTheme"
+		              android:text="Other" 
+		              />
+			  </RadioGroup>
+ 	  		</TableRow>
+      	</TableLayout> 
+      </ScrollView>
+     
+</LinearLayout>
+
+
+</ScrollView>
+ <LinearLayout
+			     android:layout_width="fill_parent"
+			     android:layout_height="wrap_content"
+			     android:layout_gravity="center_vertical"
+			     android:gravity="center"
+			     android:orientation="horizontal" 
+			     android:layout_alignParentBottom="true"
+			     android:layout_weight="7" >
+
+                 <Button
+                     android:id="@+id/btnSignUp"
+                     android:layout_width="wrap_content"
+                     android:layout_height="match_parent"
+                     android:text="Done"
+                     android:layout_weight="1"
+                     style="@style/DefaultButton"
+                     android:gravity="center"
+                     android:layout_alignParentBottom="true"
+                     android:layout_gravity="center_vertical" />
+                 <Button
+                    android:id="@+id/btnCancel"  
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Cancel"
+                    style="@style/DefaultButton"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center_vertical"/>
+            </LinearLayout>
+ </LinearLayout>

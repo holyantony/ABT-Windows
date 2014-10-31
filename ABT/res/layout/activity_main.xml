@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/gray_theme"
+    android:orientation="vertical" >
+
+   <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue_theme"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/bcreateOrg"
+            style="@style/DefaultButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="7dp"
+            android:layout_weight="1"
+            android:text="@string/createOrgButton" />
+
+        <TextView
+            style="@style/ShodowFont"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="Aakash Business Tool" />
+            
+            <Button
+                android:id="@+id/bselectOrg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:text="@string/selectOrgButton"
+                style="@style/DefaultButton"
+        		android:layout_margin="7dp" />
+            </LinearLayout>
+   <LinearLayout android:layout_width="fill_parent"
+    android:layout_height="2dp"
+    android:background="#ffffff"/>
+
+    <com.example.gkaakash.SlideHolder xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/slideHolder"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".MainActivity" >
+
+    <ScrollView
+        android:layout_width="200dp"
+        android:layout_height="fill_parent"
+        android:background="@color/blue_theme" >
+
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/btnImport"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                style="@drawable/default_button"
+                android:text="Import organisation" />
+
+            <LinearLayout android:layout_width="fill_parent"
+    			android:layout_height="2dp"
+    			android:layout_marginLeft="10dp"
+    			android:layout_marginRight="10dp"
+    			android:background="#ffffff"/>
+            
+            <Button
+                android:id="@+id/btnSetIP"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                style="@drawable/default_button"
+                android:text="Change server location" />
+
+            <LinearLayout android:layout_width="fill_parent"
+    			android:layout_height="2dp"
+    			android:layout_marginLeft="10dp"
+    			android:layout_marginRight="10dp"
+    			android:background="#ffffff"/>
+            
+            <Button
+                android:id="@+id/btnHelp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                style="@drawable/default_button"
+                android:text="Help" />
+            
+            <LinearLayout android:layout_width="fill_parent"
+    			android:layout_height="2dp"
+    			android:layout_marginLeft="10dp"
+    			android:layout_marginRight="10dp"
+    			android:background="#ffffff"/>
+        </LinearLayout>
+    </ScrollView>
+            <LinearLayout
+                android:id="@+id/content_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@android:color/transparent">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/logo" />
+                
+                <TextView
+                    android:id="@+id/about"
+                    android:layout_width="700dp"
+                	android:layout_height="wrap_content"
+            		android:layout_gravity="center"
+            		android:textSize="15dp"
+            		android:textColor="#FFFFFF"
+            		android:gravity="center" />
+                
+            </LinearLayout>
+            </com.example.gkaakash.SlideHolder>
+        </LinearLayout>

@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:layout_width="fill_parent" 
+ android:layout_height="fill_parent"
+ android:orientation="vertical"
+ android:weightSum="100"
+ android:background="@color/gray_theme">
+ 
+    <include layout="@layout/org_info"
+    android:layout_weight="20"/>
+ 
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="90">
+
+	<TableLayout 
+	    		android:id="@+id/orgDetails"
+        		android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:paddingLeft="10dp"
+ 				android:paddingRight="10dp">
+		
+	    <TableRow>
+		<TextView 
+		    	android:id="@+id/tvRegNum"
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="Registration no."
+        		android:visibility="invisible"
+        		style="@style/CodeFont" />
+		<EditText 
+		    android:id="@+id/etRegNum"
+		    android:layout_width="0dip"
+			android:layout_weight="2"
+			android:hint="Tap to enter registration number"
+			android:visibility="invisible"
+			style="@style/EditTextAppTheme" />
+		</TableRow>
+	    
+	    <TableRow>
+		<TextView 
+		    	android:id="@+id/tvRegDate"
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="Registration date"
+				style="@style/CodeFont"
+        		android:visibility="invisible"/>
+		<Button 
+		    android:id="@+id/btnRegDate"
+		    android:layout_width="0dip"
+			android:layout_weight="2"
+			android:gravity="left"
+			android:text=""
+			style="@style/CodeFont"
+			android:visibility="invisible" />
+		</TableRow>
+	    
+	    <TableRow>
+		<TextView 
+		    	android:id="@+id/tvFcraNum"
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="FCRA registration no."
+				style="@style/CodeFont"
+        		android:visibility="invisible" />
+		<EditText 
+		    android:id="@+id/etFcraNum"
+		    android:layout_width="0dip"
+			android:layout_weight="2"
+			android:hint="Tap to enter FCRA registration number"
+			android:visibility="invisible" 
+			style="@style/EditTextAppTheme" />
+		</TableRow>
+	    
+	    <TableRow>
+		<TextView 
+		    	android:id="@+id/tvFcraDate"
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="FCRA registration date"
+				style="@style/CodeFont"
+        		android:visibility="invisible"/>
+		<Button 
+		    android:id="@+id/btnFcraDate"
+		    android:layout_width="0dip"
+			android:layout_weight="2"
+			android:gravity="left"
+			android:text=""
+			style="@style/CodeFont"
+			android:visibility="invisible" />
+		</TableRow>
+	    
+		<TableRow>
+		<TextView 
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="Country"
+				style="@style/CodeFont" />
+		<Spinner
+                android:id="@+id/sGetCountry"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:entries="@array/country_prompt"
+                android:prompt="@string/country"
+                android:layout_weight="2" />
+		
+		</TableRow>
+		<TableRow>
+		<TextView 
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="State"
+				style="@style/CodeFont" />
+		<Spinner
+                android:id="@+id/sGetStates"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:prompt="@string/state" 
+                />
+		</TableRow>
+		
+		<TableRow>
+		<TextView 
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="City"
+				style="@style/CodeFont" />
+		<Spinner
+                android:id="@+id/sGetCity"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="2" 
+                android:prompt="@string/city"/>
+		</TableRow>	
+		
+		<TableRow>
+		<TextView 
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="Address"
+				style="@style/CodeFont" />
+		<EditText 
+		    android:id="@+id/etGetAddr"
+		    android:layout_width="0dip"
+			android:layout_weight="2"
+			android:hint="Tap to enter address"
+			android:inputType="textPostalAddress"
+			style="@style/EditTextAppTheme" />
+		</TableRow>
+			
+		<TableRow>
+
+		<TextView
+		    android:layout_width="0dip"
+		    android:layout_weight="1"
+		    android:text="Postal code"
+		    style="@style/CodeFont" />
+
+		<EditText 
+		    	android:id="@+id/sGetPostal"
+		    	android:layout_width="0dip"
+				android:layout_weight="2"
+				android:hint="Tap to enter postal code"
+				android:inputType="phone"
+				style="@style/EditTextAppTheme" />
+		</TableRow>
+		
+		<TableRow>
+
+		<TextView
+		    android:layout_width="0dip"
+		    android:layout_weight="1"
+		    android:text="Phone no."
+		    style="@style/CodeFont" />
+
+		<EditText 
+		    	android:id="@+id/eGetPhone"
+		    	android:layout_width="0dip"
+				android:layout_weight="2"
+				android:hint="Tap to enter phone number" 
+				android:inputType="phone"
+				style="@style/EditTextAppTheme" />
+		</TableRow>
+		<TableRow>
+
+		<TextView
+		    android:layout_width="0dip"
+		    android:layout_weight="1"
+		    android:text="Fax no."
+		    style="@style/CodeFont" />
+
+		<EditText 
+		    	android:id="@+id/eGetFax"
+		    	android:layout_width="0dip"
+				android:layout_weight="2"
+				android:hint="Tap to enter fax number" 
+				android:inputType="phone"
+				style="@style/EditTextAppTheme" />
+		</TableRow>
+		<TableRow>
+		<TextView 
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="E-mail ID"
+				style="@style/CodeFont" />
+		<EditText 
+		    	android:id="@+id/eGetEmailid"
+		    	android:layout_width="0dip"
+				android:layout_weight="2"
+				android:hint="Tap to enter e-mail iD"
+				android:inputType="textEmailAddress"
+				style="@style/EditTextAppTheme" />
+		</TableRow>
+		
+		<TableRow>
+		<TextView 
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="Website"
+				style="@style/CodeFont" />
+		<EditText 
+		        android:id="@+id/etGetWebSite"
+		    	android:layout_width="0dip"
+				android:layout_weight="2"
+				android:hint="Tap to enter website"
+				android:inputType="textEmailAddress"
+				style="@style/EditTextAppTheme" />
+		</TableRow>
+		
+		<TableRow>
+
+		<TextView
+		    android:id="@+id/tvMVATnum"
+		    android:layout_width="0dip"
+		    android:layout_weight="1"
+		    android:text="VAT no."
+		    style="@style/CodeFont"
+		    android:visibility="invisible" />
+
+		<EditText 
+		    android:id="@+id/etMVATnum"
+		    android:layout_width="0dip"
+			android:layout_weight="2"
+			android:hint="Tap to enter VAT number"
+			android:visibility="invisible"
+			style="@style/EditTextAppTheme" />
+		</TableRow>
+		
+		<TableRow>
+		<TextView 
+		    	android:id="@+id/tvServiceTaxnum"
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="Service tax no."
+				style="@style/CodeFont"
+        		android:visibility="invisible" />
+		<EditText 
+		    android:id="@+id/etServiceTaxnum"
+		    android:layout_width="0dip"
+			android:layout_weight="2"
+			android:hint="Tap to enter service tax number"
+			android:visibility="invisible"
+			style="@style/EditTextAppTheme" />
+		</TableRow>
+		
+		<TableRow>
+		<TextView 
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="PAN no."
+				style="@style/CodeFont" />
+		<EditText 
+		    	android:id="@+id/etPanNo"
+		    	android:layout_width="0dip"
+				android:layout_weight="2"
+				android:hint="Tap to enter parmanent account number"
+				style="@style/EditTextAppTheme" />
+		</TableRow>
+</TableLayout>
+</ScrollView>
+				
+		 <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="5"
+        android:gravity="center"
+        android:layout_marginBottom="6dp"
+        android:orientation="horizontal" >
+	
+        <Button
+            android:id="@+id/btnOrgDetailSave"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_alignParentBottom="true"
+            android:text="Save"
+            style="@style/DefaultButton" />
+		
+        <Button
+            android:id="@+id/btnSkip"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_alignParentBottom="true"
+            android:text="Skip"
+            style="@style/DefaultButton" />
+        <Button
+            android:id="@+id/btnDeleteOrg"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+           	android:layout_gravity="center_vertical"
+           	android:layout_alignParentBottom="true"
+           	android:layout_weight="1"
+           	android:text="Delete"
+            android:visibility="gone"
+            style="@style/DefaultButton"/>
+        
+
+    </LinearLayout>
+</LinearLayout>

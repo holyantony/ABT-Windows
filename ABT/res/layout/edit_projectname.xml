@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/gray_theme"
+        android:orientation="vertical">
+        
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:layout_weight="90" >
+          
+               <TextView
+        	        android:id="@+id/tveditWarning"
+        	        android:layout_width="wrap_content"
+        	        android:layout_height="wrap_content"
+        	        android:layout_gravity="center"
+        	        android:textSize="17dp"
+        	        android:textColor="#F90000"
+        	        android:visibility="gone"
+        	        />
+			
+		     <EditText
+	            android:id="@+id/edit_project_name"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:inputType="textCapWords"
+	            android:layout_margin="10dp" >
+	
+	            <requestFocus />
+	        </EditText>
+		 </LinearLayout>
+	     <LinearLayout
+			     android:layout_width="fill_parent"
+			     android:layout_height="wrap_content"
+			     android:layout_gravity="center_vertical"
+			     android:gravity="center"
+			     android:orientation="horizontal" 
+			     android:layout_alignParentBottom="true"
+			     android:layout_weight="7" >
+
+                 <Button
+                     android:id="@+id/btnSave"
+                     android:layout_width="wrap_content"
+                     android:layout_height="match_parent"
+                     android:text="Done"
+                     android:layout_weight="1"
+                     style="@style/DefaultButton"
+                     android:gravity="center"
+                     android:layout_alignParentBottom="true"
+                     android:layout_gravity="center_vertical" />
+                 <Button
+                    android:id="@+id/btnCancel"  
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Cancel"
+                    style="@style/DefaultButton"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center_vertical"/>
+            </LinearLayout>
+       </LinearLayout>
+          
+
+   

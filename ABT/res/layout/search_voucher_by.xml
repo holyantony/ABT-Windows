@@ -1,0 +1,182 @@
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+         android:layout_width="fill_parent" 
+ android:layout_height="fill_parent"
+ android:orientation="vertical"
+ android:weightSum="100">
+ <ScrollView 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="90"
+    android:padding="10dp" >
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:orientation="vertical"
+        android:id="@+id/layout_root" >
+    	<TextView
+             android:id="@+id/tvWarning"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:textColor="#F90000"
+             android:textSize="20dp"
+             android:visibility="gone" />
+        
+        <Spinner
+            android:id="@+id/sSearchVoucherBy"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:spinnerMode="dialog"
+            style="@style/SpinnerAppTheme"
+            android:entries="@array/searchVoucherBy"
+            android:prompt="@string/searchVoucherBy" />
+
+        <EditText
+            android:id="@+id/searchByVCode"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Tap to enter voucher code"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            style="@style/EditTextAppTheme" >
+            <requestFocus />
+        </EditText>
+        
+        <LinearLayout
+        	android:layout_width="fill_parent"
+        	android:layout_height="fill_parent" 
+        	android:orientation="horizontal"
+         	android:id="@+id/timeInterval" 
+         	android:visibility="invisible"
+         	android:baselineAligned="false">
+        
+         
+         <LinearLayout 
+        	android:layout_width="fill_parent"
+        	android:layout_height="fill_parent" 
+        	android:orientation="vertical"
+         	android:layout_gravity="left"
+          	android:layout_weight="50" >
+        
+         <TextView
+            android:id="@+id/tvsetFromdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="From-date"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp" />
+
+         <Button 
+                 android:id="@+id/btnsetLedgerFromdate"
+                 android:layout_width="match_parent"
+                 android:layout_weight="1"
+                 android:layout_height="wrap_content"
+                 android:text="123"/>
+
+        </LinearLayout>
+        
+        
+         <LinearLayout 
+        	android:layout_width="fill_parent"
+        	android:layout_height="fill_parent" 
+        	android:orientation="vertical"
+         	android:layout_weight="50" >
+         
+        
+        <TextView
+            android:id="@+id/tvsetT0date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="To-date"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp" />
+
+                 <Button
+                 android:id="@+id/btnsetLedgerTodate"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:text="123" />
+        </LinearLayout>
+        
+         </LinearLayout>
+        
+        <EditText
+            android:id="@+id/searchByNarration"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Tap to enter narration"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            style="@style/EditTextAppTheme" >
+            <requestFocus />
+        </EditText>
+        
+        <EditText
+            android:id="@+id/etVoucher_number"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Tap to enter voucher number"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            style="@style/EditTextAppTheme" >
+            <requestFocus />
+        </EditText>
+        
+        <Spinner
+            android:id="@+id/saccount_name"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:spinnerMode="dialog"
+            style="@style/SpinnerAppTheme"
+            />
+        <Spinner
+            android:id="@+id/svoucher_type"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:spinnerMode="dialog"
+            style="@style/SpinnerAppTheme"
+            />
+
+    </LinearLayout>
+    </ScrollView>
+    
+ <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+                 <Button
+                     android:id="@+id/btnView"
+                     android:layout_width="wrap_content"
+                     android:layout_height="match_parent"
+                     android:text="View"
+                     android:layout_weight="1"
+                     android:gravity="center"
+                     android:layout_alignParentBottom="true"
+                     android:layout_gravity="center_vertical"
+                     style="@style/DefaultButton" />
+                 <Button
+                    android:id="@+id/btnCancel"  
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Cancel"
+                    style="@style/DefaultButton"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center_vertical"/>
+            </LinearLayout>
+            </LinearLayout>
+ 

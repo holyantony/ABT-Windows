@@ -1,0 +1,76 @@
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
+        android:orientation="vertical"
+        android:background="@color/gray_theme">
+        	
+        	 <include layout="@layout/org_info"/>
+        
+			<ListView 
+			    android:id="@+id/ltProjectNames"
+				android:layout_width="fill_parent"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:background="@color/gray_theme">
+			</ListView>
+		
+			<LinearLayout
+			     android:id="@+id/proj"	
+        	    android:layout_width="fill_parent"
+        	    android:layout_height="wrap_content"
+        	    android:layout_gravity="center_vertical"
+        	    android:background="@color/blue_theme"
+        	    android:minHeight="50dp"
+        	    android:paddingLeft="10dp"
+        	    android:paddingRight="10dp"
+        	    android:layout_alignParentBottom="true"
+        	    android:orientation="horizontal">
+        	    
+				<TableLayout
+				   			    
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content" >
+
+        	   <TableRow 
+        	       	android:layout_width="match_parent"
+                	android:layout_height="wrap_content"
+                	android:gravity="center" 
+                	android:padding="3dp"
+               		android:layout_gravity="center_vertical" >
+        	       
+        	        <TextView
+        	        android:layout_width="wrap_content"
+        	        android:layout_height="wrap_content"
+        	        android:text="Enter projectname:"
+        	        style="@style/ShodowFont"
+        	        android:textSize="20sp"
+        	        android:layout_weight="1 "/>
+
+        	    <EditText
+        	        android:id="@+id/etProjectname"
+        	        android:layout_width="wrap_content"
+        	        android:layout_height="wrap_content"
+        	        android:hint="Tap to enter project name"
+        	        android:inputType="textCapWords"
+        	        android:layout_weight="1"
+        	        style="@style/EditTextAppTheme" />
+
+        	    <Button
+        	        android:id="@+id/add_project"
+        	        android:layout_width="wrap_content"
+        	        android:layout_height="wrap_content"
+        	        android:layout_gravity="center_vertical"
+        	        style="@style/DefaultButton"
+        	        android:layout_marginLeft="60dp"
+        	        android:layout_marginTop="3dp"
+        	        android:layout_marginBottom= "3dp"
+        	        android:gravity="center"
+        	        android:text="Add Project"
+        	        android:layout_weight="1" />
+        	   </TableRow>
+        	   
+        	   </TableLayout> 
+        	</LinearLayout>
+			
+    </LinearLayout>

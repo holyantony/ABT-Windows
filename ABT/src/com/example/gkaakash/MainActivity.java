@@ -1,0 +1,2204 @@
+package com.example.gkaakash;
+
+import java.io.BufferedInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.math.RoundingMode;
+import java.net.URL;
+import java.net.URLConnection;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.zip.GZIPInputStream;
+
+import org.apache.tools.ant.taskdefs.condition.Os;
+import org.apache.tools.tar.TarEntry;
+import org.apache.tools.tar.TarInputStream;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.StatFs;
+import android.text.Html;
+import android.text.InputType;
+import android.text.method.LinkMovementMethod;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
+import android.view.WindowManager;
+import android.webkit.WebView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.gkaakash.controller.Organisation;
+import com.gkaakash.controller.Report;
+import com.gkaakash.controller.Startup;
+import com.gkaakash.controller.User;
+
+public class MainActivity extends Activity{
+	//Add a class property to hold a reference to the button
+	Button create_org;
+	private View select_org;
+	private Object[] orgNameList;
+	Spinner getOrgNames;
+	final Context context = this;
+	static Boolean tabFlag = false;
+	static Boolean searchFlag=false;
+	static Boolean nameflag=false;
+	static boolean reportmenuflag;
+	static boolean editDetails=false;
+	static AlertDialog help_dialog;
+	private ProgressDialog mProgressDialog, progressBar;
+	static String IPaddr_value;
+	String result;
+	boolean fstab_flag = true;
+	File checkImg;
+	File checkImgextsd;
+	File checkTar;
+	File checkTarExtsd;
+	static boolean no_dailog=false;
+	module m;
+	private AlertDialog dialog;
+	protected RadioButton radioButtonValue;
+	static Boolean username_flag=false;
+	static String IPaddr;
+	private Spinner getFinancialyear;
+	private Startup startup;
+	private User user;
+	private Button bProceed,btnSelLogIn;
+	Object[] financialyearList;
+	private Button btnDeleteOrg;
+	protected AdapterView<SpinnerAdapter> parent;
+	protected Object selectedFinancialYear;
+	//static String existingOrgFlag;
+	protected static Integer client_id;
+	protected static String fromDate;
+	protected static String  toDate;
+	RadioGroup radioUserGroup,radioUserAdminGroup;
+	private EditText eloginPassword;
+	private EditText eloginUsername;
+	static String user_role;
+	String loginUsername,login_password;
+	TextView tvwarning,tvLoginWarning,tvSignUp,tvuserrole,link;
+	String get_extra_flag;
+	static boolean reset_password_flag = false;
+	RadioButton rb_admin,rb_guest,rb_manager,rb_operator;
+	TextView tvDisplayFromDate, tvDisplayToDate;
+	Button btnChangeFromDate, btnChangeToDate, btnCreate,btnLogin,btnNext;
+	static int year, month, day, toYear, toMonth, toDay;
+	static final int FROM_DATE_DIALOG_ID = 0;
+	static final int TO_DATE_DIALOG_ID = 1;
+	Spinner orgType, sQuestions; 
+	RadioGroup radioGender;
+	String org;
+	static String organisationName,orgTypeFlag,selectedOrgType,todate;
+	static String fromdate;
+	final Calendar c = Calendar.getInstance();
+	private EditText orgName;
+	Object[] deployparams;
+	private boolean setOrgDetails;
+	DecimalFormat mFormat;
+	boolean orgExistFlag,createorgflag;
+	int genderid, selectedQuestion;
+	static String answer,lastname,username ,password ,confpassword,loginPassword;
+	private EditText eUserName ,ePassword , eConfPassword, eAnswer;
+	boolean adminflag=false;
+	protected Object[] orgparams;
+	private Organisation orgnisation;
+	private module module;
+	private SlideHolder mSlideHolder;
+	String dest;
+	Report report ;
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// 'Help' menu to 66666main page options menu
+
+		menu.add(1,2,2,"Import");
+		menu.add(1,3,3,"Set IP");
+		return super.onCreateOptionsMenu(menu);	
+	}
+	public void onDestroy() {
+	    super.onDestroy();
+	    Runtime.getRuntime().gc();      
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if(item.getItemId() == 2){
+			//Toast.makeText(context, "help_flag_option is set to 2", Toast.LENGTH_SHORT).show();
+			importorganisation();
+		}
+		if(item.getItemId() == 3){
+			//Toast.makeText(context, "help_flag_option is set to 3"
+			setRemoteLocation();
+		}
+
+		return super.onOptionsItemSelected(item);
+	}//if running this app on emulator, comment the below line
+
+
+	private void importorganisation() {
+		try {
+			report.pushexport(client_id);
+			File export = new File("/mnt/sdcard/export");
+			if(export.exists()){ 
+				//copy export dir from /opt/abt/ to sdcard
+				String[] command = {"rm -r /data/local/abt/opt/abt/export/","busybox cp /mnt/sdcard/export/ /data/local/abt/opt/abt/ -R"};
+				module.RunAsRoot(command);
+
+				final Organisation organisation = new Organisation(IPaddr);
+				//get list of all exported organisations
+				Object[] result = (Object[]) organisation.getAllExportedOrganisations();
+				final ArrayList<ArrayList> Grid = new ArrayList<ArrayList>();
+				for(Object tb : result)
+				{
+					Object[] t = (Object[]) tb;
+					ArrayList<String> resultList = new ArrayList<String>();
+					for(int i=0;i<t.length;i++){
+
+						resultList.add((String) t[i].toString());
+
+					}
+					Grid.add(resultList);
+				}
+
+				System.out.println("grid1:"+Grid);
+				//call xml for creating layout inflater(customised dialog) 
+				LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+				final View layout = inflater.inflate(R.layout.import_organisation, (ViewGroup) findViewById(R.id.layout_login));
+				final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				builder.setView(layout);
+				TextView tvalertHead1 =(TextView) layout.findViewById(R.id.tvalertHead1);
+				tvalertHead1.setText("Import organisation");
+
+				Button btnImport =  (Button) layout.findViewById(R.id.btnImport);
+				Button btnCancel =  (Button) layout.findViewById(R.id.btnExit);
+				final Spinner sOrganisation =  (Spinner) layout.findViewById(R.id.sOrganisation);
+				final Spinner sYear =  (Spinner) layout.findViewById(R.id.sYear);
+
+				//lets find duplicate words in java array and return array with unique words 
+				ArrayList<String> org = new ArrayList<String>();
+				Set<String> set = new HashSet<String>(Grid.get(0));
+				//Converting a set to an array for String representation
+				String[] array = set.toArray(new String[0]);
+
+				ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(context,
+						android.R.layout.simple_spinner_item, array);
+				dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				sOrganisation.setAdapter(dataAdapter1);
+
+				sOrganisation.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+					@Override
+					public void onItemSelected(AdapterView<?> arg0, View arg1,
+							int pos, long arg3) {
+						ArrayList<String> year = new ArrayList<String>();
+						for (int i = 0; i < Grid.get(0).size(); i++) {
+							if(sOrganisation.getSelectedItem().toString()
+									.equalsIgnoreCase((String) Grid.get(0).get(i))){
+								year.add((String) Grid.get(1).get(i));
+
+							} 
+						}
+						//add financial year
+						ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context,
+								android.R.layout.simple_spinner_item, year);
+						dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+						sYear.setAdapter(dataAdapter);
+					}
+
+					@Override
+					public void onNothingSelected(AdapterView<?> arg0) {
+						// TODO Auto-generated method stub
+
+					}  
+				}); 
+ 
+				btnImport.setOnClickListener(new View.OnClickListener(){
+					public void onClick(View v) {
+						
+						Object[] params = new Object[]{sOrganisation.getSelectedItem(),
+								sYear.getSelectedItem().toString().substring(0,10),
+								sYear.getSelectedItem().toString().substring(14,24),
+								Grid.get(2).get(Grid.get(0).indexOf(sOrganisation.getSelectedItem())),
+								Grid.get(3).get(Grid.get(0).indexOf(sOrganisation.getSelectedItem()))};
+						System.out.println("POSITION:"+sOrganisation.getSelectedItemPosition());
+						System.out.println("import in mainactivity"+params[0]+""+params[1]+""+""+params[2]+""+params[3]+""+params[4]);
+						organisation.Import(params);
+						TextView warning =  (TextView) layout.findViewById(R.id.tvWarning);
+						warning.setVisibility(TextView.VISIBLE);
+						warning.setText(Html.fromHtml("Organisation <b>"+sOrganisation.getSelectedItem()+
+								"</b> for the financial year <b>"+sYear.getSelectedItem().toString()+ 
+								"</b> imported successfully!"));
+						//View layout=View_layout();
+						//reportmenuflag = false;
+
+						//getExistingOrgNames(layout);
+						//addListenerOnItem(layout);
+						//addListenerOnLoginButton(layout);
+						getSelectOnClickValue();
+
+					}
+				});
+
+				btnCancel.setOnClickListener(new View.OnClickListener(){
+					public void onClick(View v) {
+						dialog.dismiss();
+					}
+				});
+
+
+				dialog = builder.create();
+				dialog.show();
+				dialog.setCanceledOnTouchOutside(true);
+				WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+				//customizing the width and location of the dialog on screen 
+				lp.copyFrom(dialog.getWindow().getAttributes());
+				lp.width = 750;
+				dialog.getWindow().setAttributes(lp);
+			}else{
+				m.toastValidationMessage(context, "No backup file in /mnt/sdcard/export to import organisation");
+			}
+		} catch (Exception e) {
+			m.toastValidationMessage(context, "Please try again!");
+		}
+
+	}
+  
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//Calling activity_main.xml which is first page of ABT
+		setContentView(R.layout.activity_main);
+		
+
+		if (Build.BRAND.equalsIgnoreCase("generic")) {
+			//IPaddr = "10.0.2.2"; //for normal emulator
+			//command to find the virtual box IP address: 'VBoxManage list bridgedifs'
+			IPaddr = "192.168.56.1"; //for genymotion
+			IPaddr_value = IPaddr;
+			System.out.println("YES, I am an emulator");
+		} else { 
+			IPaddr = "127.0.0.1"; 
+			IPaddr_value = IPaddr;
+			System.out.println("NO, I am NOT an emulator");  
+		}    
+		/*
+		 * toggleView can actually be any view you want.
+		 * Here, for simplicity, we're using TextView, but you can
+		 * easily replace it with button.
+		 * 
+		 * Note, when menu opens our textView will become invisible, so
+		 * it quite pointless to assign toggle-event to it. In real app
+		 * consider using UP button instead. In our case toggle() can be
+		 * replaced with open().
+		 */
+		mSlideHolder = (SlideHolder) findViewById(R.id.slideHolder);
+		View toggleView = findViewById(R.id.content_layout);
+		toggleView.setOnClickListener(new View.OnClickListener() {
+
+			@Override 
+			public void onClick(View v) {
+				mSlideHolder.toggle();
+			}
+		});
+		report = new Report(MainActivity.IPaddr_value);
+		//create object of Startup to access connection
+		//startup = new Startup();
+		m=new module();
+
+
+
+		Bundle extras = getIntent().getExtras();
+		if (extras == null) {
+			System.out.println("don hav xtra");
+		} else {  
+
+			get_extra_flag = extras.getString("flag");
+			System.out.println("hav xtra");
+			System.out.println("content:"+get_extra_flag);   
+
+		}
+
+		// call the getOrganisationName method from startup
+		//orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
+
+		//Request a reference to the button from the activity by calling “findViewById”
+		//and assign the retrieved button to an instance variable
+		create_org = (Button) findViewById(R.id.bcreateOrg);
+		select_org =(Button) findViewById(R.id. bselectOrg);
+		Button btnImport = (Button) findViewById(R.id.btnImport);
+
+		btnImport.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				importorganisation();
+
+			}
+		});
+
+		Button btnSetIP = (Button) findViewById(R.id.btnSetIP);
+		btnSetIP.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				setRemoteLocation();
+			}
+		});
+		Button btnHelp = (Button) findViewById(R.id.btnHelp);
+		btnHelp.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				LinearLayout content_layout = (LinearLayout)findViewById(R.id.content_layout);
+				LayoutInflater inflater = ((Activity)MainActivity.this).getLayoutInflater();
+				View layout = inflater.inflate(R.layout.help, null);
+				if(content_layout.getChildCount() == 0){
+					content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+				}else{
+					content_layout.removeAllViews();
+					content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+				}
+				
+				Help help = new Help();
+				WebView engine = (WebView) layout.findViewById(R.id.webView1);
+
+				help.loadURL(engine);
+			}
+		});
+		
+		//set about text
+		TextView tv = (TextView)findViewById(R.id.about);
+		tv.setText(Html.fromHtml(getString(R.string.about_para)));
+		tv.setMovementMethod(LinkMovementMethod.getInstance());
+		
+		//Request a reference to the spinner from the activity by calling “findViewById”
+		//and assign the retrieved spinner to an instance variable
+		getOrgNames = (Spinner)findViewById(R.id.sGetOrgNames);
+		//creating new method do event on button
+		if(get_extra_flag==null)
+		{addListenerOnButton();
+				
+		}else{
+			getSelectOnClickValue();
+		}
+		// copy 'aakash.sh and 'preinstall.sh to their respective paths'
+		File path = new File("/data/data/com.example.gkaakash/files/copyFilesFlag.txt");
+		if(!path.exists()){
+			loadDataFromAsset();
+		}
+		else {
+			//Toast.makeText(context, "not c       opying files from asset", Toast.LENGTH_SHORT).show();
+			System.out.println("NOT copying files from asset");
+		}
+		if(IPaddr.equals("127.0.0.1")){
+			startApp();
+		}
+		
+	}
+	//Attach a listener to the click event for the button
+	private void addListenerOnButton() {
+
+		//Create a class implementing “OnClickListener”
+		//and set it as the on click listener for the button
+		create_org.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View arg0) {
+				try {
+					reportmenuflag = true;
+					System.out.println("in create  button listner"+IPaddr);
+					LinearLayout content_layout = (LinearLayout)findViewById(R.id.content_layout);
+					LayoutInflater inflater = ((Activity)MainActivity.this).getLayoutInflater();
+					View layout = inflater.inflate(R.layout.create_org, null);
+
+					if(content_layout.getChildCount() == 0){
+						content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+					}else{
+						content_layout.removeAllViews();
+						content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+					}
+
+					user = new User(IPaddr);
+					startup = new Startup(IPaddr);
+					System.out.println("in createorg2");
+
+					//for two digit format date for dd and mm
+					mFormat= new DecimalFormat("00");
+					mFormat.setRoundingMode(RoundingMode.DOWN);
+
+					//Declaring new method for setting date into "from date" and "to date" textview
+					setDateOnLoad(layout);
+					/*
+					 * creating a new interface for showing a date picker dialog that
+					 * allows the user to select financial year start date and to date
+					 */
+					addListeneronDateButton(layout);
+					addListeneronCreateButton(layout);
+					orgType = (Spinner) layout.findViewById(R.id.sOrgType);
+					org  = (String) orgType.getSelectedItem();
+					//addListeneronCreateButton();
+					//creating interface to listen activity on Item 
+					addListenerOnOrgTypeSpinner();
+				}catch(Exception e)
+				{
+					IPaddr = IPaddr_value;
+					String message = "Can not connect to remote server!! \nPlease set IP again or check whether server is running!!" +
+							"\nRe-establishing connection to the local server...";
+					m.toastValidationMessage(context, message);
+				}
+			}// end of onClick
+		});// end of create_org.setOnClickListener
+		select_org.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View arg0) {
+				System.out.println("in button listner"+IPaddr);
+				
+				getSelectOnClickValue();
+
+			}// end of onClick
+
+		});// end of select_org.setOnClickListener
+	}// end of addListenerOnButton() method
+
+	public void getSelectOnClickValue() {
+		startup = new Startup(IPaddr);
+		// check existing organisation name list is null
+		try{
+			// call the getOrganisationName method from startup
+			orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
+			if(orgNameList.length<1)
+			{
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				builder.setMessage("Please create organisation")
+				.setCancelable(false)
+				.setPositiveButton("Ok",
+						new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						//do nothing
+					}
+				});
+
+				AlertDialog alert = builder.create();
+				alert.show();                    }
+			else
+			{
+				View layout=View_layout();
+				reportmenuflag = false;
+//				Toast.makeText(getApplicationContext(), "In sel:"+reportmenuflag, Toast.LENGTH_SHORT).show();
+
+				getExistingOrgNames(layout);
+				addListenerOnItem(layout);
+				addListenerOnLoginButton(layout);
+			}
+		}catch (Exception e) {
+				// TODO: handle exception
+				System.out.println("exception value");
+			}
+
+	}
+
+	
+	public View View_layout(){
+		LinearLayout content_layout = (LinearLayout)findViewById(R.id.content_layout);
+		LayoutInflater inflater = ((Activity)MainActivity.this).getLayoutInflater();
+		View layout = inflater.inflate(R.layout.select_org, null);
+
+		if(content_layout.getChildCount() == 0){
+			content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+		}else{
+			content_layout.removeAllViews();
+			content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+		}
+		user= new User(IPaddr);
+		
+		
+		btnSelLogIn = (Button) layout.findViewById(R.id.btnSelLogIn);
+		getOrgNames = (Spinner) layout.findViewById(R.id.sGetOrgNames);	
+		getFinancialyear = (Spinner) layout.findViewById(R.id.sGetFinancialYear);
+		getOrgNames.setMinimumWidth(100);
+		getFinancialyear.setMinimumWidth(250);
+		
+		
+		return layout;
+	}
+	
+	
+	
+	private void loadDataFromAsset() {
+		try {
+
+			// get input stream for text
+
+			InputStream is = getAssets().open("aakash.sh");
+			InputStream is2 = getAssets().open("preinstall.sh");
+
+			// check size
+
+			int size = is.available();
+			int size2 = is2.available();
+			// create buffer for IO
+
+			byte[] buffer = new byte[size];
+			byte[] buffer2 = new byte[size2];
+
+			// get data to buffer
+
+			is.read(buffer);
+			is2.read(buffer2);
+
+			try {
+				FileOutputStream output = openFileOutput("aakash.sh", Context.MODE_PRIVATE);
+				output.write(buffer);
+				output.flush();
+				output.close();
+				is.close();
+
+				OutputStream output2 = new FileOutputStream("/mnt/sdcard/preinstall.sh");
+				output2.write(buffer2);
+				output2.flush();
+				output2.close();
+				is2.close();
+
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			String[] command = {"busybox mv /mnt/sdcard/preinstall.sh /system/bin/",
+					"chown root.root /system/bin/preinstall.sh",
+			"chmod 555 /system/bin/preinstall.sh"};
+			RunAsRoot(command);
+			FileOutputStream output = openFileOutput("copyFilesFlag.txt", Context.MODE_PRIVATE);
+			output.flush();
+			output.close();
+		}
+
+		catch (IOException ex) {
+
+			return;
+		}
+
+	}
+
+
+	private void RunAsRoot(String[] command2) {
+		// run as a system command
+		try {
+			Process process = Runtime.getRuntime().exec("su");
+			DataOutputStream os = new DataOutputStream(process.getOutputStream());
+			for (String tmpmd : command2){
+				os.writeBytes(tmpmd +"\n" );
+			}              
+			os.writeBytes("exit\n");
+			os.flush();
+
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	////////////////////////////
+	private void startApp() {
+		/**
+		 * checks existance of:
+		 * 1) /data/local/linux/etc/fstab
+		 * 2) /mnt/sdcard/abt.img
+		 * 3) /mnt/sdcard/abt.tar.gz or /mnt/extsd/abt.tar.gz
+		 * 
+		 **/
+		File fstab = new File("/data/local/abt/etc/fstab");
+		checkImg = new File("/mnt/sdcard/abt.img");
+		checkImgextsd = new File("/mnt/extsd/abt.img");
+		checkTar = new File("/mnt/sdcard/abt.tar.gz");
+		checkTarExtsd = new File("/mnt/extsd/abt.tar.gz");
+
+		if(fstab.exists()) {
+			//start app
+		}
+		else if(checkImg.exists()) {
+			if(fstab.exists()) {
+				//Toast.makeText(context, "img exists , help_popup()", Toast.LENGTH_SHORT).show();
+				//start app
+			}
+			else {
+				fstab_flag = false;	
+				//Toast.makeText(context, "fstab false, reboot...", Toast.LENGTH_SHORT).show();
+				reboot();	
+			}
+		}
+		else if(checkImgextsd.exists()) {
+			if(fstab.exists()) {
+				//Toast.makeText(context, "fstab exist***** , help_popup()", Toast.LENGTH_SHORT).show();
+				//start app
+			}
+			else {
+				fstab_flag = false;	
+				//Toast.makeText(context, "fstab false, reboot...", Toast.LENGTH_SHORT).show();
+				reboot();	
+			}
+		}
+		else if(checkTar.exists()) {
+			// extract
+			// reboot
+			if(getAvailableSpaceInMB("mnt/sdcard") < 300L){
+				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+				builder.setMessage("Can't exract abt.tar.gz, no enough space on internal sdcard, Exiting the application!")
+				.setCancelable(false)
+				.setPositiveButton("Ok",
+						new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						finish();
+						android.os.Process
+						.killProcess(android.os.Process.myPid());
+					}
+				});
+				AlertDialog alert = builder.create();
+				alert.show();
+			}else{
+				spinner("mnt/sdcard");
+			}
+		} 
+		else if(checkTarExtsd.exists()) {
+			// extract
+			// reboot
+			if(getAvailableSpaceInMB("mnt/extsd") < 300L){
+				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+				builder.setMessage("Can't exract abt.tar.gz, no enough space on external sdcard, exiting the application!")
+				.setCancelable(false)
+				.setPositiveButton("Ok",
+						new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						finish();
+						android.os.Process
+						.killProcess(android.os.Process.myPid());
+					}
+				});
+				AlertDialog alert = builder.create();
+				alert.show();
+			}else{
+				spinner("mnt/extsd");
+			}
+		} 
+		else {
+			// download
+			// extract
+			// reboot
+			//Toast.makeText(context, "start downloading", Toast.LENGTH_SHORT).show();
+			LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+			final View layout = inflater.inflate(R.layout.download_source,
+					(ViewGroup) findViewById(R.id.layout_root));
+
+			// Building DatepPcker dialog
+			AlertDialog.Builder builder = new AlertDialog.Builder(
+					MainActivity.this);        	        	
+			builder.setView(layout);
+			builder.setTitle("Download Aakash Business Tool(ABT) Filesystem");
+			builder.setCancelable(false);
+			Button btnNO = (Button) layout.findViewById(R.id.btnCancel);
+
+			btnNO.setOnClickListener(new OnClickListener() {
+				public void onClick(View v) {
+					finish();
+					android.os.Process
+					.killProcess(android.os.Process.myPid());
+				}	
+			});	
+
+			Button btnyes = (Button) layout.findViewById(R.id.btnYes);
+			btnyes.setOnClickListener(new OnClickListener() {
+				public void onClick(View v) {
+
+					if(isInternetOn()) {
+						// INTERNET IS AVAILABLE, DO STUFF..
+						Toast.makeText(context, "Connected to network", Toast.LENGTH_SHORT).show();
+
+						/**
+						 * download image from aakashlabs.org
+						 **/
+						final String url = "http://files.aakashlabs.org/abt.tar.gz";
+
+						/*
+						 * check free space available in /mnt/sdcard, it should be greater than 380MB(292+78)
+						 * if YES, download abt.tar.gz
+						 */
+
+						if(getAvailableSpaceInMB("mnt/sdcard") > 380L){
+
+							Toast.makeText(context, "Downloading abt.tar.gz in /mnt/sdcard", Toast.LENGTH_SHORT).show();
+							dest = "mnt/sdcard";
+							startDownloadProgressBar(dest);
+							new DownloadFileAsync().execute(url,dest);
+
+						}
+						else if(getAvailableSpaceInMB("mnt/extsd") > 380L){
+							AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+							builder.setMessage("No enough space on internal sdcard, Do you want to download file on external sdcard?")
+							.setCancelable(false)
+							.setNegativeButton("No thanks, Exit from application", new DialogInterface.OnClickListener() {
+								
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									finish();
+									android.os.Process
+									.killProcess(android.os.Process.myPid());
+								}
+							})
+							.setPositiveButton("Yes",
+									new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int id) {
+	        						Toast.makeText(context, "Downloading abt.tar.gz in /mnt/extsd.", Toast.LENGTH_SHORT).show();
+	        						dest = "mnt/extsd";
+	        						startDownloadProgressBar(dest);
+	        			            new DownloadFileAsync().execute(url,dest);
+								}
+							});
+							AlertDialog alert = builder.create();
+							alert.show();
+        				}else{
+							AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+							builder.setMessage("Failed to download file, No space available on both internal and external sdcard! Exiting the application!!!")
+							.setCancelable(false)
+							.setPositiveButton("Ok",
+									new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int id) {
+									finish();
+									android.os.Process
+									.killProcess(android.os.Process.myPid());
+								}
+							});
+							AlertDialog alert = builder.create();
+							alert.show();
+    					}
+
+					}else{
+						// NO INTERNET AVAILABLE, DO STUFF..
+						Toast.makeText(context, "Network disconnected", Toast.LENGTH_SHORT).show();
+						//rebootFlag = 1;
+						AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+						builder.setMessage("No Connection Found, please check your network setting!")
+						.setCancelable(false)
+						.setPositiveButton("OK",
+								new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								finish();
+								android.os.Process
+								.killProcess(android.os.Process.myPid());
+							}
+						});
+						AlertDialog alert = builder.create();
+						alert.show();
+
+					} 
+				}
+			});
+
+			help_dialog = builder.create();
+			help_dialog.show();
+			WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+			// customizing the width and location of the dialog on screen
+			lp.copyFrom(help_dialog.getWindow().getAttributes());
+			lp.width = 500;
+			help_dialog.getWindow().setAttributes(lp);
+
+		}
+	}///////START APP END
+
+
+	private void startDownloadProgressBar(final String dest) {
+		mProgressDialog = new ProgressDialog(context);
+		mProgressDialog.setMessage("Downloading file...");
+		mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		mProgressDialog.setCancelable(false);
+		mProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE,"Cancel",new DialogInterface.OnClickListener() {
+
+			public void onClick(DialogInterface dialog, int which) {
+				final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+				builder.setMessage("Are you sure you want cancel downloading?")
+				.setCancelable(false)
+				.setPositiveButton("Yes",
+						new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.dismiss();
+						help_dialog.dismiss();
+						String[] command = {"rm "+dest+"/abt.tar.gz"};
+						RunAsRoot(command);  
+						finish();
+						android.os.Process.killProcess(android.os.Process.myPid());
+					}
+				})
+				.setNegativeButton("No", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						mProgressDialog.show();
+					}
+				});
+				AlertDialog alert = builder.create();
+				alert.show();
+
+			}
+		});
+		mProgressDialog.show();
+	}    
+
+	private final boolean isInternetOn() {
+		// check internet connection via wifi   
+		ConnectivityManager connec =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+		//NetworkInfo mwifi = connec.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+		//mwifi = connec.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+		if( connec.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTED ||
+				connec.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTING ||
+				connec.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTING ||
+				connec.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTED ) {
+			//Toast.makeText(this, connectionType + ” connected”, Toast.LENGTH_SHORT).show();
+			return true;
+		} 
+		else if( connec.getNetworkInfo(0).getState() == NetworkInfo.State.DISCONNECTED ||  
+				connec.getNetworkInfo(1).getState() == NetworkInfo.State.DISCONNECTED  ) {
+			//System.out.println(“Not Connected”);
+			return false;
+		}
+		return false;
+	}
+
+	private void spinner(String extraction_source) {
+		/*
+		 * this method will start spinner first to show extraction progress
+		 * and then extraction
+		 */
+		progressBar = new ProgressDialog(context);
+		progressBar.setCancelable(false);
+		progressBar.setMessage("Extracting abt.tar.gz, please wait...");
+		progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		progressBar.show();
+
+		// start actual extraction
+		new Extract_TAR_GZ_FILE().execute(extraction_source);
+	}
+
+
+	// DOWNLOAD ??
+	class DownloadFileAsync extends AsyncTask<String, String, String> {
+		/**
+		 * download tar.gz from URL and write in destination mnt/sdcard or mnt/extsd
+		 **/
+		String download_destination;
+		@Override        	
+		public void onPreExecute() {
+			super.onPreExecute();
+		}
+
+		public String doInBackground(String... aurl) {
+			int count;
+
+			try {
+				URL url = new URL(aurl[0]);
+				download_destination = aurl[1];
+				URLConnection conexion = url.openConnection();
+				conexion.connect();
+
+				int lenghtOfFile = conexion.getContentLength();
+
+				InputStream input = new BufferedInputStream(url.openStream());
+				OutputStream output = new FileOutputStream(
+						download_destination+"/abt.tar.gz");
+
+				byte data[] = new byte[1024];
+
+				long total = 0;
+
+				while ((count = input.read(data)) != -1) {
+					total += count;
+					publishProgress("" + (int) ((total * 100) / lenghtOfFile));
+					output.write(data, 0, count);
+				}
+				output.flush();
+				output.close();
+				input.close();
+			} catch (Exception e) {
+			}
+			return null;
+
+		}
+
+		public void onProgressUpdate(String... progress) {
+			mProgressDialog.setProgress(Integer.parseInt(progress[0]));
+		}
+
+		public void onPostExecute(String unused) {
+			mProgressDialog.dismiss();
+			help_dialog.dismiss();
+			File checkTarExists = new File(download_destination+"/abt.tar.gz");
+			if (checkTarExists.exists()){
+				/*
+				 * Get length of tar file in MB, it should be grater than 78MB
+				 * if YES, start spinner for extraction
+				 */
+
+				long fileSizeInMB = checkTarExists.length()/(1024 * 1024);      		
+				if (fileSizeInMB >= 78) {
+					spinner(download_destination);
+				}else{
+					String[] command = {"busybox rm -r "+download_destination+"/abt.tar.gz"};
+					RunAsRoot(command);
+					AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+					builder.setMessage("Failed to download complete file, Exiting the application!")
+					.setCancelable(false)
+					.setPositiveButton("Ok",
+							new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							finish();
+							android.os.Process
+							.killProcess(android.os.Process.myPid());
+						}
+					});
+
+
+					AlertDialog alert = builder.create();
+					alert.show();
+
+				}
+
+			}
+		}
+		//delete internal files during un-installation 
+		public boolean deleteFile (String name){
+			name = "aakash.sh";
+			name = "copyFilesFlag.txt";
+			return false;
+
+		}
+	}
+
+	// EXTRACT CLASS
+	public class Extract_TAR_GZ_FILE extends AsyncTask<String, String, String>{
+		/**
+		 * extract an image asynchronously to '/mnt/sdcard' or 'mnt/extsd'
+		 **/
+		String img_destination;
+		@Override
+		public void onPreExecute() {
+
+			super.onPreExecute();
+			System.out.println("finnaly in  jjj");
+		}
+
+		public InputStream getInputStream(String tarFileName) throws Exception{
+			System.out.println("finnaly in");
+			if(tarFileName.substring(tarFileName.lastIndexOf(".") + 1, 
+					tarFileName.lastIndexOf(".") + 3).equalsIgnoreCase("gz")){
+				System.out.println("Creating an GZIPInputStream for the file");
+				return new GZIPInputStream(new FileInputStream(new File(tarFileName)));
+
+			}else{
+				System.out.println("Creating an InputStream for the file");
+				return new FileInputStream(new File(tarFileName));
+			}
+		}
+
+		public void untar(InputStream in, String untarDir) throws IOException {
+
+			System.out.println("Reading TarInputStream... ");
+			System.out.println(in);
+			TarInputStream tin = new TarInputStream(in);
+			System.out.println("Reading TarInputStream... 1");
+			TarEntry tarEntry = tin.getNextEntry();
+			if(new File(untarDir).exists()){
+				while (tarEntry != null){
+
+					File destPath = new File(untarDir + File.separatorChar + tarEntry.getName());
+					System.out.println("Processing " + destPath.getAbsoluteFile());
+					if(!tarEntry.isDirectory()){
+
+						FileOutputStream fout = new FileOutputStream(destPath);
+						tin.copyEntryContents(fout);
+						fout.close();
+					}else{
+						destPath.mkdir();
+					}
+					tarEntry = tin.getNextEntry();
+				}
+				tin.close();
+			}else{
+				System.out.println("That destination directory doesn't exist! " + untarDir);
+			}
+
+		}
+
+
+		@Override
+		protected String doInBackground(String... params) {
+			// 
+			try {      
+				img_destination = params[0];
+				String strSourceFile = img_destination+"/abt.tar.gz";
+				String strDest = img_destination;
+				InputStream in = getInputStream(strSourceFile);
+				untar(in, strDest);
+
+			}catch(Exception e) {
+
+				e.printStackTrace();      
+				System.out.println(e.getMessage());
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			// 
+			super.onPostExecute(result);
+			progressBar.dismiss();
+			/*
+			 * check the size of abt.img before rebooting the device
+			 * if it is greater than 292 MB, reboot
+			 */
+			File checkImgExists = new File(img_destination+"/abt.img");
+			if (checkImgExists.exists()){
+				long fileSizeInMB = checkImgExists.length()/(1024 * 1024);      		
+				if (fileSizeInMB >= 292) {
+
+					reboot();
+
+				}else{
+					String[] command = {"busybox rm -r "+img_destination+"/abt.img"};
+					RunAsRoot(command);
+					AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+					builder.setMessage("Failed to download complete abt.img, exiting the application")
+					.setCancelable(false)
+					.setPositiveButton("Ok",
+							new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							finish();
+							android.os.Process
+							.killProcess(android.os.Process.myPid());
+						}
+					});
+
+
+					AlertDialog alert = builder.create();
+					alert.show();
+				}
+			}
+			else {
+				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+				builder.setMessage("Failed to download abt.img, exiting the application")
+				.setCancelable(false)
+				.setPositiveButton("Ok",
+						new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						finish();
+						android.os.Process
+						.killProcess(android.os.Process.myPid());
+					}
+				});
+
+
+				AlertDialog alert = builder.create();
+				alert.show();
+			}
+		}
+	}
+	// EXTRACT CLASS END
+
+	// REBOOT
+	public void reboot() {
+		// reboot the device so that the filesystem is mounted
+		AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+		if (fstab_flag == true){
+			builder.setMessage("To apply changes, please reboot")
+			.setCancelable(false)
+			.setPositiveButton("Reboot",
+					new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+
+					String[] rebootCommand = {"reboot"};
+					RunAsRoot(rebootCommand);
+
+				}
+			})        	
+			.setNegativeButton("Not now", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					finish();
+					android.os.Process.killProcess(android.os.Process.myPid());
+				}
+			});
+		}
+		else {
+			builder.setMessage("Filesystem not mounted, device requires a reboot")
+			.setCancelable(false)
+			.setPositiveButton("Reboot",
+					new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+
+					String[] rebootCommand = {"reboot"};
+					RunAsRoot(rebootCommand);
+
+				}
+
+			})
+			.setNegativeButton("Not now", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					finish();
+					android.os.Process
+					.killProcess(android.os.Process.myPid());
+				}
+			});
+  
+		}
+
+
+		AlertDialog alert1 = builder.create();
+		alert1.show();
+	}
+
+////	// REBOOT END
+////
+	public void onBackPressed() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("Are you sure you want to exit?")
+		.setCancelable(false)
+		.setPositiveButton("Yes",
+				new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				
+				Intent i = new Intent(Intent.ACTION_MAIN); 
+				i.addCategory(Intent.CATEGORY_HOME);
+				i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+				startActivity(i);
+
+			}
+		})
+		.setNegativeButton("No", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.cancel();
+			}
+		});
+		AlertDialog alert = builder.create();
+		alert.show();
+		
+//		moveTaskToBack(true);
+//		finish();
+	}
+
+
+	/**
+	 * @return Number of Mega bytes available on dir
+	 */
+	public static long getAvailableSpaceInMB(String dir){
+		final long SIZE_KB = 1024L;
+		final long SIZE_MB = SIZE_KB * SIZE_KB;
+		long availableSpace = -1L;
+		StatFs stat = new StatFs(dir);
+		availableSpace = (long) stat.getAvailableBlocks() * (long) stat.getBlockSize();
+		return availableSpace/SIZE_MB;
+	} 
+
+	public void setRemoteLocation()
+	{
+		System.out.println("set ip");
+
+		final View layout = m.builder_with_inflater(this,"",R.layout.login);
+		TextView tvalertHead1 =(TextView) layout.findViewById(R.id.tvalertHead1);
+		tvalertHead1.setText("Set remote server location");
+		TextView tvalertHead2 =(TextView) layout.findViewById(R.id.tvalertHead2);
+		tvalertHead2.setVisibility(View.GONE);
+		TableRow checkbox_row = (TableRow)layout.findViewById(R.id.checkbox_row);
+		checkbox_row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 5));       
+		TextView tvUserRole =(TextView) layout.findViewById(R.id.tvUserRole);
+		tvUserRole.setVisibility(View.INVISIBLE);
+		RadioGroup rg = (RadioGroup)layout.findViewById(R.id.radioUser);
+		rg.setVisibility(View.INVISIBLE);
+		final TextView tvLoginWarning = (TextView) layout.findViewById(R.id.tvLoginWarning);
+		LinearLayout LinearPassword =(LinearLayout) layout.findViewById(R.id.LinearPassword);
+		LinearPassword.setVisibility(View.GONE);
+		TextView tvSignUp =(TextView) layout.findViewById(R.id.tvSignUp);
+		tvSignUp.setVisibility(View.GONE);
+		TextView tLoginUser =(TextView) layout.findViewById(R.id.tLoginUser);
+		EditText eLoginUser =(EditText) layout.findViewById(R.id.eLoginUser);
+		eLoginUser.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+		tLoginUser.setText("Enter remote server IP address: ");
+		eLoginUser.setHint("enter remote server IP address");
+		eLoginUser.setInputType(InputType.TYPE_CLASS_PHONE);
+		eLoginUser.setBackgroundResource(R.drawable.textfield_activated_holo_light);
+		Button btnLogin = (Button)layout.findViewById(R.id.btnLogin);
+		btnLogin.setText("Ok");
+//		
+		Button btnCancel = (Button)layout.findViewById(R.id.btnCancel);
+		btnCancel.setVisibility(View.VISIBLE);
+		btnCancel.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				module.dialog.dismiss();
+			}
+		});
+		
+		module.dialog.setCanceledOnTouchOutside(true);
+//
+		btnLogin.setOnClickListener(new OnClickListener() {   
+
+			@Override
+			public void onClick(View v) {
+				EditText eLoginUser =(EditText) layout.findViewById(R.id.eLoginUser);
+				if(m.isEmpty(new Object[]{eLoginUser.getText().toString()}))
+				{
+					tvLoginWarning.setVisibility(View.VISIBLE);
+					tvLoginWarning.setText("Please fill text field");
+				}
+				else{
+					System.out.println("value of:"+eLoginUser.getText().toString());
+					//CoreConnection.setIPaddress(IPaddr);
+
+					String pattern="([0-9]+)(\\.[0-9]+)(\\.[0-9]+)(\\.[0-9])";
+
+					Pattern p = Pattern.compile(pattern);
+					Matcher m = p.matcher(eLoginUser.getText().toString());
+
+					if(m.find())
+					{
+						IPaddr = eLoginUser.getText().toString();
+						module.dialog.dismiss();
+					}else
+					{
+						tvLoginWarning.setVisibility(View.VISIBLE);
+						eLoginUser.setText("");
+						tvLoginWarning.setText("Please enter proper IP");
+					}
+				}
+			}  
+		});  
+	}
+
+
+	public void getExistingOrgNames(View layout) {
+		//call getOrganisationNames method 
+		orgNameList = startup.getOrgnisationName();
+		System.out.println(orgNameList);
+		List<String> list = new ArrayList<String>();
+
+		for(Object st : orgNameList)
+			list.add((String) st);
+
+		if (get_extra_flag == null) {
+			// creating array adaptor to take list of existing organisation name
+			ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+					android.R.layout.simple_spinner_item, list);
+			System.out.println("List__ "+list);
+			//set resource layout of spinner to that adaptor
+			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			//set adaptor with orglist in spinner
+			getOrgNames.setAdapter(dataAdapter);
+
+		}else if ("from_menu".equals(get_extra_flag)) {
+			String orgname = menu.OrgName;
+			ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+					android.R.layout.simple_spinner_item, list);
+			dataAdapter
+			.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			int position = dataAdapter.getPosition(orgname);
+
+			getOrgNames.setAdapter(dataAdapter);
+			getOrgNames.setSelection(position);   
+
+		}
+
+	}
+
+
+	//Attach a listener to the click event for the button
+	public void addListenerOnLoginButton(View content_layout){
+		btnSelLogIn.setOnClickListener(new OnClickListener() {
+
+			private Object[] deployparams;
+			private AlertDialog dialog;
+
+			@Override
+			public void onClick(View v) {
+				startup = new Startup(IPaddr);
+				//parameters pass to core_engine xml_rpc functions
+				deployparams=new Object[]{organisationName,fromDate,toDate};
+				//call method login from startup.java 
+				client_id = startup.login(deployparams);
+				if (client_id != null) {
+					final boolean isadmin = user.isAdmin(client_id);
+					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+					final View layout = inflater.inflate(R.layout.login, (ViewGroup) findViewById(R.id.layout_login));
+					final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+					builder.setView(layout);
+					TextView tvalertHead1 =(TextView) layout.findViewById(R.id.tvalertHead1);
+					tvalertHead1.setText(Html.fromHtml("Log In to <b>"+organisationName+"</b>"));
+					TextView tvalertHead2 =(TextView) layout.findViewById(R.id.tvalertHead2);
+					tvalertHead2.setText(Html.fromHtml("Financial Year: <b>"+fromDate+"</b> to <b>"+toDate+"</b>"));
+
+					radioUserGroup = (RadioGroup)layout.findViewById(R.id.radioUser);
+					rb_admin =(RadioButton) layout.findViewById(R.id.rbAdmin);
+					rb_guest =(RadioButton) layout.findViewById(R.id.rbGuest);
+					rb_manager =(RadioButton) layout.findViewById(R.id.rbManager);
+					rb_operator =(RadioButton) layout.findViewById(R.id.rbOperator);
+					eloginUsername =(EditText) layout.findViewById(R.id.eLoginUser);
+					eloginPassword =(EditText) layout.findViewById(R.id.eLoginPassword);
+					tvLoginWarning =(TextView) layout.findViewById(R.id.tvLoginWarning);
+					link =(TextView) layout.findViewById(R.id.tvlink);
+
+					tvLoginWarning.setVisibility(TextView.GONE);
+
+					tvSignUp =(TextView) layout.findViewById(R.id.tvSignUp);
+					tvSignUp.setVisibility(TextView.GONE);
+					if(isadmin)
+					{
+						rb_guest.setVisibility(View.GONE);
+						rb_manager.setVisibility(View.VISIBLE);  
+						rb_operator.setVisibility(View.VISIBLE);
+					}
+					else{
+						rb_guest.setVisibility(View.VISIBLE);
+
+						rb_admin.setVisibility(View.GONE);
+
+					}
+
+
+					link.setOnClickListener(new OnClickListener() { 
+
+						@Override 
+						public void onClick(View arg0) { 
+							if(!(eloginUsername.getText().toString().equals(""))){
+								String unique = (String) user.getUserRole(new Object[]{eloginUsername.getText().toString()},client_id);
+								if((unique.length() != 0) && (unique.equalsIgnoreCase("Admin"))){
+									LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+									final View layout = inflater.inflate(R.layout.forgot_password, null);
+									final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+									builder.setView(layout);
+									final EditText answer =(EditText) layout.findViewById(R.id.etAnswer);
+									TextView header =(TextView) layout.findViewById(R.id.tvheader);
+									final Spinner Question =(Spinner) layout.findViewById(R.id.SpQuestions);
+
+									header.setText("Answer the security question to get access");
+									Button Ok =(Button) layout.findViewById(R.id.btnOK);
+									Button Cancel =(Button) layout.findViewById(R.id.btnCancel);
+									Cancel.setOnClickListener(new OnClickListener() {
+
+										@Override
+										public void onClick(View arg0) {
+											dialog.cancel();
+											tvLoginWarning.setVisibility(View.GONE);
+										}
+									});
+
+									Ok.setOnClickListener(new OnClickListener() {
+
+										@Override
+										public void onClick(View arg0) {
+
+											int position = Question.getSelectedItemPosition();
+											String ans =answer.getText().toString();
+											TextView errormsg =(TextView) layout.findViewById(R.id.tverror_msg);
+											Boolean result = user.AdminForgotPassword(new Object[]{position,ans,"admin"},client_id);
+
+											if(result==true){
+												Intent intent = new Intent(context,menu.class); 
+												reset_password_flag = true;
+												username = eloginUsername.getText().toString();
+												startActivity(intent); 
+											}else if ("".equals(ans)) {
+												errormsg.setVisibility(View.VISIBLE);
+												errormsg.setText("Please fill the field!");
+											}else {
+												errormsg.setVisibility(View.VISIBLE);
+												errormsg.setText("Invalid input,please try again!");
+												answer.setText("");
+											}
+										}
+									});
+
+									dialog = builder.create();
+									dialog.show();
+								}else{
+									eloginUsername.setText("");
+									eloginPassword.setText("");
+									tvLoginWarning.setVisibility(View.VISIBLE);
+									tvLoginWarning.setText("User is not present");
+								}
+
+
+							}
+							else{
+								tvLoginWarning.setVisibility(View.VISIBLE);
+								tvLoginWarning.setText("Please enter username");
+							}
+
+						}
+					});
+
+					Button btnCancel =  (Button) layout.findViewById(R.id.btnCancel);
+					btnCancel.setVisibility(View.VISIBLE);
+					btnCancel.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View v) {
+							dialog.dismiss();
+						}
+					});
+					
+					Button login =  (Button) layout.findViewById(R.id.btnLogin);
+					addRadioListnerOnItem(layout);
+					login.setOnClickListener(new View.OnClickListener(){
+
+						public void onClick(View v) {
+
+							username = eloginUsername.getText().toString();
+							login_password = eloginPassword.getText().toString();
+
+							Object[] params = new Object[]{username,login_password,user_role};
+
+							if(!m.isEmpty(params)){
+								if(isadmin==true)
+								{
+									if(rb_admin.isChecked()||rb_manager.isChecked()||rb_operator.isChecked())
+									{
+										boolean is_user_exist = user.isUserExist(params, client_id);
+										if(is_user_exist==true)
+										{
+											//To pass on the activity to the next page  
+											Intent intent = new Intent(context,menu.class); 
+											startActivity(intent); 
+
+
+										}else{
+
+
+											tvLoginWarning.setVisibility(TextView.VISIBLE);
+											tvLoginWarning.setText("Please enter correct username and password or choose proper role");
+
+										}
+									}else
+									{
+										tvLoginWarning.setVisibility(TextView.VISIBLE);
+										tvLoginWarning.setText("Please select role");
+									}
+								}else{
+
+									if ((username.equals("guest"))&&(login_password.equals("guest")))
+									{
+										//To pass on the activity to the next page  
+										Intent intent = new Intent(context,menu.class);
+										startActivity(intent); 
+									}else
+									{
+										tvLoginWarning.setVisibility(TextView.VISIBLE);
+										tvLoginWarning.setText("Username and Password is incorrect");
+
+									}		
+								}
+							}
+							else{
+								tvLoginWarning.setVisibility(TextView.VISIBLE);
+								tvLoginWarning.setText("Please fill empty field");
+							}
+
+
+						}
+
+
+					});
+
+					dialog = builder.create();
+					dialog.show();
+					dialog.setCanceledOnTouchOutside(true);
+					WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+					//customizing the width and location of the dialog on screen 
+					lp.copyFrom(dialog.getWindow().getAttributes());
+					lp.width = 750;
+					dialog.getWindow().setAttributes(lp);
+				}else{
+					IPaddr = IPaddr_value;
+					String message = "Can not connect to remote server!! \nPlease set IP again or check whether server is running!!" +
+							"\nRe-establishing connection to the local server...";
+					AlertDialog.Builder builder = new AlertDialog.Builder(context);
+					builder.setMessage(message)
+					.setCancelable(false)
+					.setPositiveButton("Ok",
+							new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							//do nothing
+						}
+					});
+
+					AlertDialog alert = builder.create();
+					alert.show();
+				}
+			}
+
+		});
+
+
+	}
+
+
+	// add Checked change listner on radioGroup 
+	public void addRadioListnerOnItem(final View layout)
+	{
+		radioUserGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			public void onCheckedChanged(RadioGroup rg, int selctedId) {
+				tvLoginWarning.setVisibility(TextView.GONE);
+				//int selcetdRadoiId = radioUserGroup.getCheckedRadioButtonId();
+				RadioButton selctedradio =(RadioButton) layout.findViewById(selctedId);
+				user_role = selctedradio.getText().toString();
+				if(user_role.equals("guest"))
+				{
+					eloginUsername.setText("guest");
+					eloginPassword.setText("guest");
+				}
+				if(rb_admin.isChecked()){
+					eloginUsername.setText("");
+					eloginPassword.setText("");
+					link.setVisibility(View.VISIBLE);
+					//Toast.makeText(selectOrg.this,"admin checked", Toast.LENGTH_SHORT).show();
+				}else {
+					link.setVisibility(View.GONE);
+				}
+			}
+		});
+	}
+
+
+	void addListenerOnItem(View content_layout){
+		//Attach a listener to the states Type Spinner to get dynamic list of cities
+		getOrgNames.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View v, int position,long id) {
+				//Retrieving the selected org type from the Spinner and assigning it to a variable 
+				organisationName = parent.getItemAtPosition(position).toString().trim();
+				//call getFinancialYear method from startup.java 
+				//it will give you financialYear list according to orgname
+				financialyearList = startup.getFinancialYear(organisationName);
+
+				List<String> financialyearlist = new ArrayList<String>();
+
+				for(Object fy : financialyearList)
+				{
+					Object[] y = (Object[]) fy;
+					// concatination From and To date 
+					financialyearlist.add(y[0]+" to "+y[1]);
+					
+				}
+
+				if(get_extra_flag==null){
+					ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context,
+							android.R.layout.simple_spinner_item, financialyearlist);
+
+					dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+					getFinancialyear.setAdapter(dataAdapter);
+				}else {
+					String date = menu.rollover+" to "+menu.givenToDateString;
+					System.out.println("date:" + date);
+					ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context,
+							android.R.layout.simple_spinner_item, financialyearlist);
+					dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+					int postion1=dataAdapter.getPosition(date);
+					System.out.println("position:"+postion1);
+					getFinancialyear.setAdapter(dataAdapter);
+					getFinancialyear.setSelection(postion1);
+					m.toastValidationMessage(context,"Rollover has been done successfully, Please login to continue!");
+
+				} 
+			}
+
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});// End of getOrgNames.setOnItemSelectedListener
+		getFinancialyear.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			private String[] finallist;
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View v, int position,long id) {
+				// TODO Auto-generated method stub
+				selectedFinancialYear = parent.getItemAtPosition(position).toString();
+				finallist = selectedFinancialYear.toString().split(" to ");
+				fromDate = finallist[0];
+				toDate = finallist[1];
+
+				//String fromDate = Startup.setOrgansationname((String)fromDate);
+				Startup.setfinancialFromDate(fromDate);
+				Startup.setFinancialToDate(toDate);
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+	} // end of addListenerOnItem()
+
+
+	public void setDateOnLoad(View content_layout) {
+		tvDisplayFromDate = (TextView) content_layout.findViewById(R.id.tvFromDate);
+		tvDisplayToDate = (TextView) content_layout.findViewById(R.id.tvToDate);
+
+		/*
+		 * set "from date" and "to date" textView
+		 * for creating calendar object and linking with its 'getInstance' method, 
+		 * for getting a default instance of this class for general use
+		 */
+		Calendar c = Calendar.getInstance(); 
+		year = c.get(Calendar.YEAR);
+		month = 3; //month = april
+		day = 1;
+
+		//set from date: day=01, month=April, year=current year
+		tvDisplayFromDate.setText(new StringBuilder()
+		.append(mFormat.format(Double.valueOf(1))).append("-")
+		.append(mFormat.format(Double.valueOf(4))).append("-")
+		.append(year));
+
+		//Add one year to current date time
+		c.add(Calendar.YEAR,1);
+		toYear = c.get(Calendar.YEAR);
+		toMonth = 2;
+		toDay = 31;
+
+		//set to date: day=31, month=March, year=current year+1
+		tvDisplayToDate.setText(new StringBuilder()
+		.append(mFormat.format(Double.valueOf(31))).append("-")
+		.append(mFormat.format(Double.valueOf(3))).append("-")
+		.append(toYear));
+
+
+	}
+
+	private void addListeneronDateButton(View content_layout) {
+		btnChangeFromDate = (Button) content_layout.findViewById(R.id.btnChangeFromDate);
+		btnChangeToDate = (Button) content_layout.findViewById(R.id.btnChangeToDate);
+
+
+		/*
+		 * when button is clicked, user can select from date(day, month and year) from datepicker,
+		 * selected date will set in 'from date' textview and set date in 'to date' text view
+		 * which is greater than from date by one year and minus one day(standard financial year format)
+		 *  
+		 */
+		btnChangeFromDate.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				//Preparing views
+				LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+				View layout = inflater.inflate(R.layout.datepiker, (ViewGroup) findViewById(R.id.layout_root));
+				//Building DatepPcker dialog
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				builder.setView(layout);
+				builder.setTitle("Set from date");
+				final DatePicker dp = (DatePicker)layout.findViewById(R.id.datePicker1);
+				dp.init(year,month,day, null);
+
+				builder.setPositiveButton("Set",new  DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						year = dp.getYear();
+						month = dp.getMonth();
+						day =  dp.getDayOfMonth();
+						String strDateTime = mFormat.format(Double.valueOf(day)) + "-" 
+								+ (mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(month))))+ 1))) + "-" 
+								+ year;
+						//set date in from date textview
+						tvDisplayFromDate.setText(strDateTime);
+
+						//setting selected date into calender's object
+						c.set(year, month, day);
+						//add one year
+						c.add(Calendar.YEAR, +1);
+						//subtracting one day
+						c.add(Calendar.DAY_OF_MONTH, -1);
+
+						toYear = c.get(Calendar.YEAR);
+						toMonth = c.get(Calendar.MONTH);
+						toDay = c.get(Calendar.DAY_OF_MONTH);
+
+						//set date in to date textview
+						tvDisplayToDate.setText(new StringBuilder()
+						.append(mFormat.format(Double.valueOf(toDay)))
+						.append("-").append(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(toMonth+1)))))))
+						.append("-").append(toYear));
+					}
+				}); 
+				dialog=builder.create();
+				dialog.show();
+			}	
+		});
+
+		/*
+		 * when button clicked, user can change the 'to date' from datepicker,
+		 * it will set the selected date in 'to date' textview, if to date is greater than from date
+		 */
+		btnChangeToDate.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				//Preparing views
+				LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+				View layout = inflater.inflate(R.layout.datepiker, (ViewGroup) findViewById(R.id.layout_root));
+				//Building DatepPicker dialog
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				builder.setView(layout);
+				builder.setTitle("Set to date");
+
+				final   DatePicker dp = (DatePicker) layout.findViewById(R.id.datePicker1);
+				dp.init(toYear,toMonth,toDay, null);
+
+				builder.setPositiveButton("Set",new  DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+
+						int Year = dp.getYear();
+						int Month = dp.getMonth();
+						int Day =  dp.getDayOfMonth();
+
+						try {
+							SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+							Date date1 = sdf.parse(day+"-"+month+"-"+year); //from date
+							Date date2 = sdf.parse(Day+"-"+Month+"-"+Year); //to date
+
+							Calendar cal1 = Calendar.getInstance(); 
+							Calendar cal2 = Calendar.getInstance(); 
+
+							cal1.setTime(date1);
+							cal2.setTime(date2);
+
+							if(cal2.after(cal1)){
+								toYear = Year;
+								toMonth = Month;
+								toDay =  Day;
+								String strDateTime = mFormat.format(Double.valueOf(toDay)) + "-" 
+										+ (mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(toMonth))))+ 1))) + "-" 
+										+ toYear;
+								tvDisplayToDate.setText(strDateTime);
+
+							}
+							else{
+								m.toastValidationMessage(context, "Please enter proper date");
+							}
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
+					}
+				}); 
+				dialog=builder.create();
+				dialog.show();
+			}	
+		});   
+	}     
+
+	// method to take ItemSelectedListner interface as a argument  
+	void addListenerOnOrgTypeSpinner(){
+		//Attach a listener to the Organisation Type Spinner
+		orgType.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View v, int position,long id){
+				//Retrieving the selected org type from the Spinner and assigning it to a variable 
+				selectedOrgType = parent.getItemAtPosition(position).toString();
+				orgTypeFlag = selectedOrgType;       
+
+
+			}
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+
+			}
+
+		});// End of orgType.setOnItemSelectedListener
+
+	}// End of addListenerOnItem()
+
+
+	private void addListeneronCreateButton(View content_layout) {
+		//Request a reference to the button from the activity by calling “findViewById” 
+		//and assign the retrieved button to an instance variable
+		btnCreate = (Button) content_layout.findViewById(R.id.btnCreate);
+		
+		orgType = (Spinner) content_layout.findViewById(R.id.sOrgType);
+		tvDisplayFromDate = (TextView) content_layout.findViewById(R.id.tvFromDate);
+		tvDisplayToDate = (TextView) content_layout.findViewById(R.id.tvToDate);
+		orgName = (EditText) content_layout.findViewById(R.id.etOrgName);
+		System.out.println("ADD List"+IPaddr);
+		orgnisation= new Organisation(IPaddr);
+		//Create a class implementing “OnClickListener” and set it as the on click listener for the button "Next"
+		btnCreate.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				
+				try{
+					System.out.println("next button "+IPaddr);
+					startup = new Startup(IPaddr);
+					organisationName = orgName.getText().toString();
+					fromdate = tvDisplayFromDate.getText().toString();
+					todate = tvDisplayToDate.getText().toString();
+					// call the getOrganisationName method from startup
+					orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
+
+					for(Object org : orgNameList){
+						if(organisationName.equals(org)){
+							orgExistFlag = false;
+							//call getFinancialYear method from startup.java 
+							//it will give you financialYear list according to orgname
+							financialyearList = startup.getFinancialYear(organisationName);
+
+							for(Object fy : financialyearList)
+							{
+								Object[] y = (Object[]) fy;
+								// concatination From and To date 
+								String fromDate=y[0].toString();
+								String toDate=y[1].toString();
+								if(fromDate.equals(fromdate) && toDate.equals(todate)){
+									orgExistFlag = true;
+									break;
+								} 
+							}  
+						}    
+					}
+					String pattern="([a-zA-Z0-9]|[- @\\.#&!'();$])*$";
+					Pattern p = Pattern.compile(pattern);
+					Matcher match = p.matcher(organisationName);
+					if(organisationName.isEmpty()||!match.find())
+					{
+						m.toastValidationMessage(context, "Please enter proper organisation name");
+						
+					}
+					else if(orgExistFlag == true)
+					{
+						m.toastValidationMessage(context, "Organisation name "+organisationName+" with this financial year exist");
+						orgExistFlag = false;
+					}
+					else{ 
+						
+						//To pass on the activity to the next page
+						MainActivity.editDetails=false;
+						deployparams = new Object[]{organisationName,fromdate,todate,orgTypeFlag}; // parameters pass to core_engine xml_rpc functions
+						client_id = startup.deploy(deployparams);
+						orgparams = new Object[]{organisationName,orgTypeFlag,"","","","","","","","","","",
+								"","","","","","" }; 
+						//call method deploy from startup.java 
+						setOrgDetails = orgnisation.setOrganisation(orgparams,client_id);
+						/* Inflater for LogIn Page after Organisation Deployment*/
+						LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+						final View layout = inflater.inflate(R.layout.login, (ViewGroup) findViewById(R.id.layout_login));
+						AlertDialog.Builder builder = new AlertDialog.Builder(context);
+						builder.setView(layout);
+						builder.setCancelable(false);
+						TextView tvalertHead1 =(TextView) layout.findViewById(R.id.tvalertHead1);
+						tvalertHead1.setText(Html.fromHtml("Organisation <b>"+organisationName+"</b> have been created successfully"));
+						TextView tvalertHead2 =(TextView) layout.findViewById(R.id.tvalertHead2);
+						tvalertHead2.setText(Html.fromHtml("Financial Year: <b>"+fromdate+"</b> to <b>"+todate+"</b>"));
+						tvLoginWarning =(TextView) layout.findViewById(R.id.tvLoginWarning);
+						tvLoginWarning.setVisibility(TextView.GONE);
+						radioUserGroup = (RadioGroup)layout.findViewById(R.id.radioUser);
+						tvSignUp =(TextView) layout.findViewById(R.id.tvSignUp);
+						tvSignUp.setVisibility(TextView.GONE);
+						rb_admin =(RadioButton) layout.findViewById(R.id.rbAdmin);
+						rb_guest =(RadioButton) layout.findViewById(R.id.rbGuest);
+						tvuserrole = (TextView) layout.findViewById(R.id.tvUserRole);
+						rb_guest.setChecked(false);
+						//call radio button listener method to do event on radio button Checked
+						setAddListenerOnRadioButton(layout);
+						Button login =  (Button) layout.findViewById(R.id.btnLogin);
+
+						login.setOnClickListener(new View.OnClickListener(){
+							public void onClick(View v) {
+
+								eloginUsername =(EditText) layout.findViewById(R.id.eLoginUser);
+								eloginPassword =(EditText) layout.findViewById(R.id.eLoginPassword);
+
+								if(adminflag == true || rb_admin.isChecked()||rb_guest.isChecked()){
+									tvLoginWarning.setVisibility(TextView.GONE);
+									username = eloginUsername.getText().toString();
+									login_password = eloginPassword.getText().toString();
+									Object[] params = new Object[]{username,login_password,user_role};
+									System.out.println("we are in login");
+									if(module.isEmpty(params))
+									{
+										String message = "Please fill blank field";
+										tvSignUp.setVisibility(TextView.GONE);
+										tvLoginWarning.setVisibility(TextView.VISIBLE);
+										tvLoginWarning.setText(message);
+
+									}else
+									{
+
+										if(user_role.equals("guest"))
+										{
+
+											if ((username.equals("guest"))&&(login_password.equals("guest")))
+											{
+												//Toast.makeText(createOrg.this,"exist "+user_role, Toast.LENGTH_SHORT).show();
+												Intent intent = new Intent(context,orgDetails.class);
+												startActivity(intent);
+											}else
+											{
+												String message = "Username and Password is incorrect";
+												tvSignUp.setVisibility(TextView.GONE);
+												tvLoginWarning.setVisibility(TextView.VISIBLE);
+												tvLoginWarning.setText(message);
+
+											}		   
+										}
+
+										if(user_role.equals("admin") ){
+											boolean is_user_exist = user.isUserExist(params, client_id);
+											//Toast.makeText(createOrg.this,"exist "+is_user_exist, Toast.LENGTH_SHORT).show();
+
+											if(is_user_exist==true)
+											{	
+												//dialog.cancel();
+												Intent intent = new Intent(context,orgDetails.class);
+												startActivity(intent);
+											}else
+											{
+												String message = "Username and Password is incorrect";
+												tvSignUp.setVisibility(TextView.GONE);
+												tvLoginWarning.setVisibility(TextView.VISIBLE);
+												tvLoginWarning.setText(message);
+
+											}					        	 
+										}
+									}
+								}
+								else{
+									String message = "Please select your role";
+									tvSignUp.setVisibility(TextView.GONE);
+									tvLoginWarning.setVisibility(TextView.VISIBLE);
+									tvLoginWarning.setText(message);
+								}
+
+
+							}
+						});
+
+						dialog = builder.create();
+						dialog.show();
+						dialog.setCanceledOnTouchOutside(false);
+						WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+						//customizing the width and location of the dialog on screen 
+						lp.copyFrom(dialog.getWindow().getAttributes());
+						lp.width = 750;
+						dialog.getWindow().setAttributes(lp);
+
+					}
+				}catch(Exception e)
+				{
+					IPaddr = IPaddr_value;
+					String message = "Can not connect to remote server!! \nPlease set IP again or check whether server is running!!" +
+							"\nRe-establishing connection to the local server...";
+					AlertDialog.Builder builder = new AlertDialog.Builder(context);
+					builder.setMessage(message)
+					.setCancelable(false)
+					.setPositiveButton("Ok",
+							new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							//do nothing
+						}
+					});
+
+					AlertDialog alert = builder.create();
+					alert.show();
+					//m.toastValidationMessage(contex, msg)   
+
+				}
+			}
+		}); //End of btnCreate.setOnClickListener
+
+	}
+
+
+	public void setAddListenerOnRadioButton(final View layout) {
+
+		radioUserGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			public void onCheckedChanged(RadioGroup rg, int selectedId) {
+
+				System.out.println("add listener radio button Create");
+				if(adminflag==false){
+					rb_admin.setChecked(false);
+				}
+				selectedId = rg.getCheckedRadioButtonId();
+				radioButtonValue = (RadioButton)layout.findViewById(selectedId);
+				user_role = (String) radioButtonValue.getText();
+
+				//Toast.makeText(createOrg.this,"hello"+user_role, Toast.LENGTH_SHORT).show();
+				//Toast.makeText(createOrg.this,"isChecked();"+rb_admin.isChecked(), Toast.LENGTH_SHORT).show();
+				eloginUsername =(EditText) layout.findViewById(R.id.eLoginUser);
+				eloginPassword =(EditText) layout.findViewById(R.id.eLoginPassword);
+
+				//Toast.makeText(createOrg.this,user_role, Toast.LENGTH_SHORT).show();
+				if(user_role.equals("admin"))
+				{
+					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+					final View layout = inflater.inflate(R.layout.sign_up, (ViewGroup) findViewById(R.id.layout_signup));
+					AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+					builder.setView(layout);
+					TextView tvalertHead1 =(TextView) layout.findViewById(R.id.tvalertHead1);
+					tvalertHead1.setText("Sign Up");
+					builder.setCancelable(true);
+					Button done =  (Button) layout.findViewById(R.id.btnSignUp);
+					Button cancel =  (Button) layout.findViewById(R.id.btnCancel);
+					// call setOnClickListner on s
+					done.setOnClickListener(new View.OnClickListener(){
+						private RadioButton rbgender;
+						private String gender;
+
+						public void onClick(View v) {
+
+							radioGender =(RadioGroup) layout.findViewById(R.id.radioGender);
+
+							eUserName =(EditText) layout.findViewById(R.id.eUserName);
+							ePassword =(EditText)layout.findViewById(R.id.ePassword);
+							eConfPassword =(EditText) layout.findViewById(R.id.eConfPassword);
+							sQuestions = (Spinner) layout.findViewById(R.id.sQuestions);
+							eAnswer = (EditText) layout.findViewById(R.id.eAnswer);
+							tvwarning =(TextView) layout.findViewById(R.id.tvWarning);
+
+							genderid = radioGender.getCheckedRadioButtonId();
+							rbgender =(RadioButton)layout.findViewById(genderid);
+							gender = rbgender.getText().toString();
+							answer = eAnswer.getText().toString(); 
+							username = eUserName.getText().toString();
+							password = ePassword.getText().toString();
+							confpassword= eConfPassword.getText().toString();
+							selectedQuestion = sQuestions.getSelectedItemPosition();
+
+							//System.out.println("we are in signup");
+							Object[] params = new Object[]{username,password,gender,user_role,selectedQuestion, answer};
+							//Toast.makeText(createOrg.this,selectedQuestion, Toast.LENGTH_SHORT).show();
+							System.out.println("we are in signup1"+username+password+gender+user_role+selectedQuestion+answer);
+							if(module.isEmpty(params)||module.isEmpty(new Object[]{confpassword}))
+							{
+								String message = "please fill blank field";
+								tvwarning.setVisibility(TextView.VISIBLE);
+								tvwarning.setText(message);
+								//Toast.makeText(createOrg.this,user_role, Toast.LENGTH_SHORT).show();
+								// dialog.getLayoutInflater();
+							}else if(!password.equals(confpassword))
+							{
+								//Toast.makeText(createOrg.this,"password check", Toast.LENGTH_SHORT).show();
+								ePassword.setText("");
+								eConfPassword.setText("");
+								String message = "Please enter correct password";
+								tvwarning.setVisibility(TextView.VISIBLE);
+								tvwarning.setText(message);
+							}else
+							{
+								//Toast.makeText(createOrg.this,"else", Toast.LENGTH_SHORT).show();
+								boolean unique = user.isUserUnique(new Object[]{username},client_id);
+								// Toast.makeText(createOrg.this,"user"+unique, Toast.LENGTH_SHORT).show();
+								if(unique==true)
+								{	 
+									String setuser = user.setUser(params, client_id);
+									//String message = "Sign up successfully";
+									rb_guest.setVisibility(View.GONE);
+									rb_admin.setVisibility(View.GONE);
+									tvuserrole.setVisibility(View.GONE);
+
+									adminflag = true;  
+									eloginUsername.setText(username);
+									eloginPassword.setText("");
+									tvLoginWarning.setVisibility(TextView.GONE);
+									tvSignUp.setVisibility(TextView.VISIBLE);
+									tvSignUp.setText("Signed up successfully as an Admin, Please Log In!!!");
+
+									dialog.dismiss();
+								}
+								else{
+									String message = "User already exist";
+									tvwarning.setText(message);
+								}
+
+
+							} 
+
+						}
+					});
+
+					cancel.setOnClickListener(new View.OnClickListener(){
+						public void onClick(View v) {
+							adminflag = false;
+							tvLoginWarning.setVisibility(TextView.GONE);
+							eloginUsername.setText("");
+							eloginPassword.setText("");
+							dialog.dismiss();
+
+
+						}
+					});
+
+					dialog = builder.create();
+					dialog.show();
+					WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+					//customizing the width and location of the dialog on screen 
+					lp.copyFrom(dialog.getWindow().getAttributes());
+					lp.width = 800;
+					dialog.getWindow().setAttributes(lp);
+
+
+				}else
+				{
+					tvLoginWarning.setVisibility(TextView.GONE);
+					eloginPassword.setText("guest");
+					eloginUsername.setText("guest");
+
+				}
+			}// end of onCheckedChanged() method of setOnCheckedChangeListener()
+		}); // end of setOnCheckedChangeListener
+	}// end of addListenerOnRadioButton()
+}

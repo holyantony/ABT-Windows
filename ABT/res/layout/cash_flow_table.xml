@@ -1,0 +1,147 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/gray_theme">
+
+   <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/layout_root"
+            android:layout_weight="50"
+            >
+      
+       <include layout="@layout/org_info"/>
+  
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ScrollCashFlow"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="15dp">
+         <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/layout_root"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+             <HorizontalScrollView 
+              android:layout_height="fill_parent"
+          android:layout_width="fill_parent"
+            android:fillViewport="true">
+            
+                  <LinearLayout 
+                    android:layout_height="fill_parent"
+            		android:layout_width="fill_parent"
+            		android:orientation="vertical">
+            		
+                    <LinearLayout
+       		android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+           
+           <LinearLayout
+               android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+           
+               <TableLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:stretchColumns="0"
+           android:id="@+id/mainheadertable1"
+           android:background="#ffffff"
+           android:layout_weight="1" />
+              
+           <!-- just add space line -->
+   		<Space
+   	   android:layout_width="10dip"
+       android:layout_height="10dip"/>
+   	
+               <TableLayout
+           android:id="@+id/mainheadertable2"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:stretchColumns="0"
+           android:background="#ffffff"
+           android:layout_weight="1" />
+               
+                </LinearLayout>
+                
+                </LinearLayout>
+                 
+                 
+              <ScrollView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:fillViewport="true"
+           android:scrollbarFadeDuration="0"
+           android:scrollbarAlwaysDrawVerticalTrack="true" 
+           android:scrollbarAlwaysDrawHorizontalTrack="true">
+           
+            <LinearLayout
+       	android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="vertical">
+           
+           <LinearLayout
+               android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal" >
+           
+               <TableLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:stretchColumns="0"
+           android:id="@+id/maintable1"
+           android:background="#ffffff"
+           android:layout_weight="1" />
+              
+           <!-- just add space line -->
+   	<Space
+   	   android:layout_width="10dip"
+       android:layout_height="10dip"/>
+   	
+               <TableLayout
+           android:id="@+id/maintable2"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:stretchColumns="0"
+           android:background="#ffffff"
+           android:layout_weight="1" />
+               
+                </LinearLayout>
+                
+                </LinearLayout>
+            </ScrollView>
+            </LinearLayout>
+            </HorizontalScrollView>
+         </LinearLayout>  
+         </ScrollView>
+          </LinearLayout>
+
+         <LinearLayout
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/layout_root"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:layout_alignParentBottom="true"
+              android:layout_alignParentRight="true"
+              android:background="#ffffff" >
+             
+             
+               <TextView
+              android:id="@+id/tvdifference"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="left"
+              android:text="Difference:"
+              android:layout_weight="80"
+              android:gravity="center|right"
+              android:textColor="#000000"
+              android:paddingRight="10dp"
+              android:textSize="15dp" />
+             
+          </LinearLayout> 
+        
+   
+</RelativeLayout>

@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:layout_width="fill_parent" 
+ android:layout_height="fill_parent"
+ android:id="@+id/voucher_layout"
+ android:orientation="vertical"
+ android:weightSum="100"
+ android:background="@color/gray_theme">
+    
+<ScrollView 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="80">
+	<LinearLayout 
+	    android:orientation="vertical"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:paddingLeft="10dp"
+ 		android:paddingRight="10dp" >
+
+		<LinearLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal"
+		    android:paddingTop="5dp"
+		    android:paddingBottom="5dp" >
+
+			<LinearLayout
+			    android:layout_width="wrap_content"
+			    android:layout_height="match_parent"
+			    android:orientation="horizontal"
+			    android:layout_weight="1" >
+
+				<TextView
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="Voucher type:"
+				    style="@style/CodeFont" />
+				
+				<Spinner 
+            		android:id="@+id/sVouchertypes"
+            		android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+            		android:spinnerMode="dialog"
+            		style="@style/SpinnerAppTheme"
+            		android:prompt="@string/voucherType_prompt" />
+			    
+			</LinearLayout>
+
+			<LinearLayout
+			    android:layout_width="wrap_content"
+			    android:layout_height="match_parent"
+			    android:orientation="horizontal"
+			    android:layout_weight="1"
+			    android:gravity="center" >
+
+				<TextView
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="Voucher date:"
+				    style="@style/CodeFont" />
+
+				<Button
+				    android:id="@+id/btnVoucherDate"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"/>
+
+			</LinearLayout>
+			
+			<LinearLayout
+			    android:layout_width="wrap_content"
+			    android:layout_height="match_parent"
+			    android:orientation="horizontal"
+			    android:gravity="right"
+			    android:layout_weight="1" >
+
+				<TextView
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="Project:"
+				    style="@style/CodeFont" />
+
+				
+
+				<Spinner 
+            		android:id="@+id/sProjectNames"
+            		android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+            		android:spinnerMode="dialog"
+            		style="@style/SpinnerAppTheme"
+            		android:prompt="@string/projectName_prompt" />
+
+			</LinearLayout>
+
+		</LinearLayout>
+	    
+		<TableLayout
+		    
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="vertical"
+		    android:stretchColumns="5"
+		    android:paddingLeft="1dp"
+		    android:paddingRight="1dp"
+		    android:background="#ffffff" >
+		    
+		    
+		    <TableRow 
+			    android:layout_width="match_parent"
+			    android:layout_marginTop="1dp"
+			    android:layout_marginBottom="1dp"
+		        android:layout_height="wrap_content">
+			    
+			    <TextView
+			        android:id="@+id/account_type"
+			        style="@style/CodeFont"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="1"
+			        android:gravity="left"
+			        android:layout_gravity="center"
+			        android:text="      A/C type"
+			        android:background="@color/blue_theme" />
+			    
+			    <TextView
+			        android:id="@+id/acount_name"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="1"
+			        android:gravity="center_horizontal"
+			        android:text="Account name        "
+			        style="@style/CodeFont"
+			        android:background="@color/blue_theme"  />
+			    
+			    <TextView
+			        android:id="@+id/amount"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="1"
+			        android:gravity="center_horizontal"
+			        android:text="@string/closing_balance"
+			        style="@style/CodeFont"
+			        android:background="@color/blue_theme"  />
+			    
+			    <TextView
+			        android:id="@+id/closing_balance"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="1"
+			        android:gravity="center_horizontal"
+			        android:text="@string/amount"
+			        style="@style/CodeFont"
+			        android:background="@color/blue_theme"  />
+			    
+			    <TextView
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="1"
+			        android:text=""
+			        android:gravity="center_horizontal"
+			        style="@style/CodeFont"
+			        android:background="@color/blue_theme"  />
+
+			</TableRow>
+
+		    
+		</TableLayout>
+		
+		<TableLayout 
+			android:id="@+id/Vouchertable"
+		    android:orientation="vertical"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent" 
+    		android:stretchColumns="7" 
+    		android:paddingLeft="1dp"
+    		android:paddingRight="1dp"
+    		android:paddingBottom="1dp"
+    		android:background="#ffffff"/>
+	
+	<LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:paddingTop="10dp"
+        android:gravity="left">
+
+	<TextView
+	    android:id="@+id/tvVoucherNumber"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="71.67"
+	    android:text="Voucher number"
+	    style="@style/CodeFont" />
+	
+	<EditText
+	    android:id="@+id/etVoucherNumber"
+	    android:layout_width="283dp"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="31.88"
+	    android:hint="Tap to enter voucher number"
+	    android:paddingTop="2dp"
+	    style="@style/EditTextAppTheme" />
+
+	</LinearLayout>
+	
+	<LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:gravity="left">
+
+	<TextView
+	    android:id="@+id/tvRefNumber"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="70.76"
+	    android:text="Voucher reference number"
+	    style="@style/CodeFont" />
+	
+	<EditText
+			        android:id="@+id/etRefNumber"
+			        android:layout_width="305dp"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="30"
+			        android:hint="Tap to enter reference number" 
+			        android:paddingTop="2dp"
+			        style="@style/EditTextAppTheme"/>
+	
+	</LinearLayout>
+	
+	
+	
+	<LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:gravity="left">
+
+	<TextView
+	    android:id="@+id/tvVoucherNarration"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="71.10"
+	    android:text="Voucher narration"
+	    style="@style/CodeFont" />
+	
+	<EditText
+			        android:id="@+id/etVoucherNarration"
+			        android:layout_width="283dp"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="30"
+			        android:hint="Tap to enter voucher narration" 
+			        android:paddingTop="2dp"
+			        android:inputType="textCapSentences"
+			        style="@style/EditTextAppTheme"/>
+	</LinearLayout>
+	
+	
+	<LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:gravity="left">   
+	
+	<TextView
+	    android:id="@+id/tvpaymentmode"
+	    style="@style/CodeFont"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="65"
+	    android:text="Payment mode" />
+				<RadioGroup
+			        android:id="@+id/radioRole"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content" 
+			        android:orientation="horizontal"
+			        android:layout_weight="1">
+		 
+				 <RadioButton
+		                android:id="@+id/rbcash"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		        		android:paddingRight="20dp"
+		                android:text="Cash"
+		                android:checked="true"
+		                style="@style/RadioButtonAppTheme" />  
+		
+		          <RadioButton
+		              android:id="@+id/rbcheque"
+		              android:layout_width="wrap_content"
+		              android:layout_height="wrap_content"
+		              android:paddingRight="20dp"
+		              android:text="Cheque"
+		              style="@style/RadioButtonAppTheme" />
+		        
+			  </RadioGroup>
+
+	 
+	</LinearLayout>
+	
+	<LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:gravity="left">
+	
+	<TextView
+	    android:id="@+id/tvcheque"
+	    style="@style/CodeFont"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="73.5"
+	    android:text="Cheque no." />
+				
+	<EditText
+        android:id="@+id/etcheque"
+        android:layout_width="283dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="30"
+        android:hint="Tap to enter cheque No." 
+        android:paddingTop="2dp"
+        android:inputType="numberSigned"
+        style="@style/EditTextAppTheme"/>  
+	 
+	</LinearLayout>
+	
+	</LinearLayout>
+</ScrollView>
+
+
+<LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="20"
+        android:weightSum="100"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/btnSaveVoucher"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="50"
+            android:text="Save"
+            style="@style/DefaultButton" />
+		
+        <Button
+            android:id="@+id/btnResetVoucher"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="50"
+            android:text="Reset"
+            style="@style/DefaultButton" />
+
+    </LinearLayout>
+</LinearLayout>

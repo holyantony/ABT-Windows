@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    android:id="@+id/LinearLayout01"
+    android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/gray_theme" >
+    
+    <LinearLayout 
+    android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingLeft="10dp"
+	android:paddingRight="10dp"
+	android:paddingTop="5dp">
+     
+        <Spinner
+        android:id="@+id/sSearchAccountBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:layout_weight="1"
+        android:entries="@array/searchAccountBy_arrays"
+        android:prompt="@string/searchAccountBy_prompt" />
+        
+		<EditText
+		    android:id="@+id/etSearch"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:hint="Search by name"
+		    android:layout_weight="2"/>
+
+	</LinearLayout>
+	
+    
+<ListView 
+    android:id="@+id/ltAccname"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:paddingLeft="10dp"
+	android:paddingRight="10dp">
+</ListView>
+</LinearLayout>
